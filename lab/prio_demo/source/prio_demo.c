@@ -10,8 +10,8 @@
 
 #include <tonc.h>
 
-#include "prio_gfx.h"
-#include "prio_bg.h"
+#include "ball.h"
+#include "cage.h"
 
 // --------------------------------------------------------------------
 //  TYPES
