@@ -9,7 +9,7 @@
 //   "mode 4" or "mode 5". The cursor position is displayed in white.
 // * D-pad: moves cursor.
 // * L,R: switches between modes
-// * Start: toggles cursor-string 'opacity' (i.e, between direct 
+// * Start: toggles cursor-string 'opacity' (i.e, between direct
 //   overwrite and clear+overwrite)
 
 #include <stdio.h>
@@ -25,7 +25,7 @@
 
 #define CLR_BD    0x080F
 
-const TILE cursorTile= 
+const TILE cursorTile=
 {{	0x0, 0x21, 0x211, 0x2111, 0x21111, 0x2100, 0x1100, 0x21000	}};
 
 
@@ -102,10 +102,10 @@ int main()
 
 			cursor.attr0 &= ATTR0_Y_MASK;
 			cursor.attr1 &= ATTR1_X_MASK;
-			siprintf(str, "%c %3d,%3d", (bClear?'c':'o'), 
+			siprintf(str, "%c %3d,%3d", (bClear?'c':'o'),
 				cursor.attr1, cursor.attr0);
 		}
-		
+
 		// switch modes
 		mode += bit_tribool(key_hit(-1), KI_R, KI_L);
 		mode= clamp(mode, 3, 6);

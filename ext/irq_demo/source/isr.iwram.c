@@ -63,7 +63,7 @@ IWRAM_CODE void isr_master_nest_c()
 	// Just ack in REG_IF and return
 	if(pir->flag == 0 || pir->isr == NULL)
 	{
-		REG_IF= ieif;	
+		REG_IF= ieif;
 		return;
 	}
 

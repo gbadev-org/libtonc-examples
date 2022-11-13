@@ -5,7 +5,7 @@
 //! \author cearn
 //
 // === NOTES ===
-// * Yes I know it contains 'hidden' bugs, but sorting them out would 
+// * Yes I know it contains 'hidden' bugs, but sorting them out would
 //   just complicate the code to no end and isn't worth the bother.
 
 #include <tonc.h>
@@ -26,7 +26,7 @@
 
 const char hwstr[]= "Hello world!";
 
-typedef struct 
+typedef struct
 {
 	u32 state;
 	int tt;
@@ -96,7 +96,7 @@ int main()
 		pats[ii].tt= 3*ii+1;
 		pats[ii].fy= -12<<8;
 		pats[ii].fvy= 0;
-		
+
 		// init sprite position
 		obj[ii].attr0 &= ~ATTR0_Y_MASK;
 		obj[ii].attr0 |= 160;

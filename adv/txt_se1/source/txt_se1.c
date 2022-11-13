@@ -45,7 +45,7 @@ void init_main()
 	txt_init_se(0, BG_CBB(0) | BG_SBB(31), 0x1000, CLR_RED, 0x0E);
 
 	// again, with a twist
-	txt_init_se(0, BG_CBB(0) | BG_SBB(31), 0xF000|TID_FONT2, 
+	txt_init_se(0, BG_CBB(0) | BG_SBB(31), 0xF000|TID_FONT2,
 		CLR_YELLOW | (CLR_MAG<<16), TXT_PID_SHADE);
 
 	// and once more, with feeling!
@@ -60,9 +60,9 @@ void init_main()
 	memcpy32(pal_bg_mem, borderPal, borderPalLen/4);
 
 	// overwrite /\ [] `% ^_ to use border tiles
-	//  / ^ \ 
-	//  [ # ] 
-	//  ` _ '  
+	//  / ^ \
+	//  [ # ]
+	//  ` _ '
 	const u8 bdr_lut[9]= "/^\\[#]`_\'";
 	for(ii=0; ii<9; ii++)
 		gptxt->chars[bdr_lut[ii]]= TID_FRAME0+ii;
@@ -118,21 +118,21 @@ int main()
 	se_puts(8, 16, "bank 1:\n  red",   0x1000);
 	se_puts(8, 40, "bank 2:\n  green", 0x2000);
 	se_puts(8, 72, "bank 3:\n  blue",  0x3000);
-	se_puts(8, 96, "bank 15:\n yellow, \nwith mag \nshadow", 
+	se_puts(8, 96, "bank 15:\n yellow, \nwith mag \nshadow",
 		0xF000|TID_FONT2);
 
 	// framed text, v1
 	txt_se_frame(10, 2, 29, 9, 0);
 	se_puts( 88, 24, "frame 0:", 0);
 	se_puts(104, 32, "/^\\[#]`_'", 0);
-	se_puts( 88, 40, "bank  0:\n  basic text,\n  transparent bg", 
+	se_puts( 88, 40, "bank  0:\n  basic text,\n  transparent bg",
 		0);
 
 	// framed text, v2
 	txt_se_frame(10, 11, 29, 18, TID_FRAME1-TID_FRAME0);
 	se_puts( 88,  96, "frame 1:", 0xE000|TID_FONT3);
 	se_puts(104, 104, "/^\\[#]`_'", 9);
-	se_puts( 88, 112, "bank 14:\n  shaded text\n  opaque bg", 
+	se_puts( 88, 112, "bank 14:\n  shaded text\n  opaque bg",
 		0xE000|TID_FONT3);
 
 	while(1)

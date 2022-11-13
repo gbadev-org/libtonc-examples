@@ -1,6 +1,6 @@
 //
 // m7_isrs.iwram.c
-// Separate file for HBL interrupts because apparently it screws up 
+// Separate file for HBL interrupts because apparently it screws up
 //   on hardware now.
 
 #include <tonc.h>
@@ -9,8 +9,8 @@
 
 
 // Perspective zoom for this scanline
-// Note that this is actually wrong, because 
-// the hblank occurs AFTER REG_VCOUNT is drawn, screwing up 
+// Note that this is actually wrong, because
+// the hblank occurs AFTER REG_VCOUNT is drawn, screwing up
 // at scanline 0. Oh well.
 
 ///////////////////////////////////////////////////////////////////////
@@ -34,7 +34,7 @@ void m7_hbl_a()
 	REG_BG2PC= (g_sinf*lam)>>8;
 
 	REG_BG2X = cam_pos.x - ( (xs*g_cosf-ys*g_sinf)>>8 );
-	REG_BG2Y = cam_pos.z - ( (xs*g_sinf+ys*g_cosf)>>8 );	
+	REG_BG2Y = cam_pos.z - ( (xs*g_sinf+ys*g_cosf)>>8 );
 }
 
 
@@ -43,7 +43,7 @@ void m7_hbl_a()
 // - (offset * zoom) * rotate
 // - lambda is .12f for xs and ys
 // - 120 multiplied before shift in xs
-// * .16 lambda wouldn't work due to 
+// * .16 lambda wouldn't work due to
 void m7_hbl_b()
 {
 	FIXED lam, xs, ys;
@@ -58,7 +58,7 @@ void m7_hbl_b()
 	REG_BG2PC= (g_sinf*lam)>>12;
 
 	REG_BG2X = cam_pos.x - ( (xs*g_cosf-ys*g_sinf)>>12 );
-	REG_BG2Y = cam_pos.z - ( (xs*g_sinf+ys*g_cosf)>>12 );	
+	REG_BG2Y = cam_pos.z - ( (xs*g_sinf+ys*g_cosf)>>12 );
 }
 
 // --- Type C ---
@@ -74,18 +74,18 @@ void m7_hbl_c()
 	lam= cam_pos.y*lu_div(REG_VCOUNT)>>12;	// .8*.16 /.12 = 20.12
 	lcf= lam*g_cosf>>8;						// .12*.8 /.8 = .12
 	lsf= lam*g_sinf>>8;						// .12*.8 /.8 = .12
-	
+
 	REG_BG2PA= lcf>>4;
 	REG_BG2PC= lsf>>4;
 
 	// Offsets
-	// Note that the lxr shifts down first! 
+	// Note that the lxr shifts down first!
 
 	// horizontal offset
 	lxr= 120*(lcf>>4);		lyr= (M7_D*lsf)>>4;
 	REG_BG2X= cam_pos.x - lxr + lyr;
 
 	// vertical offset
-	lxr= 120*(lsf>>4);		lyr= (M7_D*lcf)>>4;	
+	lxr= 120*(lsf>>4);		lyr= (M7_D*lcf)>>4;
 	REG_BG2Y= cam_pos.z - lxr - lyr;
 }

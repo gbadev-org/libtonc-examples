@@ -6,7 +6,7 @@
 //
 // (20031220 -20070809, Cearn)
 // (20221113, AntonioND)
- 
+
 #include <stdio.h>
 #include <tonc.h>
 
@@ -17,13 +17,13 @@
 #define TILE_SIZE       (8 * 8 / 2)
 #define TILES_START     (berkTiles + TILE_SIZE / sizeof(berkTiles[0]))
 
-const TFont berkFont= 
+const TFont berkFont=
 {
 	TILES_START, 0, 0,
 	48, 11,
 	24, 40,
-	24, 40, 480, 
-	4, 0, 
+	24, 40, 480,
+	4, 0,
 };
 
 void tmr_test()
@@ -32,7 +32,7 @@ void tmr_test()
 	// 0x4000 ticks @ FREQ_1024
 
 	REG_TM2D= -0x4000;			// 0x4000 ticks till overflow
-	REG_TM2CNT= TM_FREQ_1024;	// we're using the 1024 cycle timer	
+	REG_TM2CNT= TM_FREQ_1024;	// we're using the 1024 cycle timer
 
 	// cascade into tm3
 	REG_TM3CNT= TM_ENABLE | TM_CASCADE;
@@ -47,7 +47,7 @@ void tmr_test()
 		if(REG_TM3D != sec)
 		{
 			sec= REG_TM3D;
-			tte_printf("#{es;P:24,60}%02d:%02d:%02d", 
+			tte_printf("#{es;P:24,60}%02d:%02d:%02d",
 				sec/3600, (sec%3600)/60, sec%60);
 		}
 

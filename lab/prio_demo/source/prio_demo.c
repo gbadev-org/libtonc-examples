@@ -131,20 +131,20 @@ void spr_update()
 		else
 			prio= 1;
 		obj->attr2= attr2 | ATTR2_PRIO(prio);
-		
+
 		// set sort key
 		// key{1E-1F} : priority
 		// key{00-1D} : depth value = -zz
-		// Sort gives an ascending array, but key-signs mean the 
+		// Sort gives an ascending array, but key-signs mean the
 		// following ranges
 		//   prio 0 : [E, 2> *1000:0000 = [-2,+2>
 		//   prio 3 : [A, E> *1000:0000 = [-6,-2>
 		// to make prio 0 be lowest, subtract 6 (=8-E)
-		*key++= (prio<<30) + (zz>>2) - (6<<28);	
+		*key++= (prio<<30) + (zz>>2) - (6<<28);
 
 		/* // If you want to exclude hidden sprites, use this:
 		if( (oe->attr0&OE_A0_MODE_MASK) != OE_A0_HIDE )
-			sort_keys[ii]= (prio<<30) + (zz>>2) - (6<<28);	
+			sort_keys[ii]= (prio<<30) + (zz>>2) - (6<<28);
 		else
 			sort_keys[ii]= (1<<31)-1;
 		*/
@@ -205,7 +205,7 @@ void init_main()
 	for(ii=0; ii<SPR_COUNT/2; ii++)
 	{
 		obj_set_attr(&oam_buffer[ii], 0, ATTR1_SIZE_16, 0x4001);
-		obj_set_attr(&oam_buffer[ii+SPR_COUNT/2], 0, 
+		obj_set_attr(&oam_buffer[ii+SPR_COUNT/2], 0,
 			ATTR1_SIZE_16, 0x6001);
 	}
 

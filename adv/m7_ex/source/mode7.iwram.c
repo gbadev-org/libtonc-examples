@@ -26,13 +26,13 @@ IWRAM_CODE void m7_hbl_floor()
 	{
 		BFN_SET(REG_DISPCNT, DCNT_MODE1, DCNT_MODE);
 		REG_BG2CNT= m7_level.bgcnt_floor;
-	}		
-		
+	}
+
 	BG_AFFINE *bga= &m7_level.bgaff[vc+1];
 	REG_BG_AFFINE[2] = *bga;
 
 	// A distance fogging with high marks for hack-value
-	// Remember that we used pb to store the scale in, 
+	// Remember that we used pb to store the scale in,
 	// so the blend is basically lambda/64 = distance * 2
 	// which will do nicely
 	u32 ey= bga->pb*6>>12;
@@ -91,7 +91,7 @@ IWRAM_CODE void m7_prep_sprite(M7_LEVEL *level, M7_SPRITE *spr)
 	M7_CAM *cam= level->camera;
 	VECTOR vr, vc;		// Difference and inverted-cam vector
 	int sx, sy;			// Object size
-	RECT rect;			// Object rectangle 
+	RECT rect;			// Object rectangle
 
 	// Convert to camera frame
 	vec_sub(&vr, &spr->pos, &cam->pos);
@@ -103,30 +103,30 @@ IWRAM_CODE void m7_prep_sprite(M7_LEVEL *level, M7_SPRITE *spr)
 	OBJ_ATTR *obj= &spr->obj;
 	sx= obj_get_width(obj);
 	sy= obj_get_height(obj);
-	
+
 	// --- Check with viewbox ---
-	do 
+	do
 	{
 		if(M7_NEAR*256 > vc.z || vc.z > M7_FAR*256)
-			break;	
+			break;
 
-		rect.left= vc.x - spr->anchor.x*(256>>M7O_NORM);		
+		rect.left= vc.x - spr->anchor.x*(256>>M7O_NORM);
 		rect.right= rect.left + sx*(256>>M7O_NORM);
 
 		if(M7_LEFT*vc.z > rect.right*M7_D || rect.left*M7_D > M7_RIGHT*vc.z)
-			break;	
+			break;
 
-		rect.top= vc.y - spr->anchor.y*(256>>M7O_NORM);		
+		rect.top= vc.y - spr->anchor.y*(256>>M7O_NORM);
 		rect.bottom= rect.top + sy*(256>>M7O_NORM);
 
 		if(-M7_TOP*vc.z > rect.bottom*M7_D || rect.top*M7_D > -M7_BOTTOM*vc.z)
-			break;	
+			break;
 
 		OBJ_AFFINE *oa= &obj_aff_mem[spr->aff_id];
 		oa->pa= oa->pd= vc.z>>(M7_D_SHIFT-M7O_NORM);	// normalized lambda
 		oa->pb= oa->pc= 0;
 
-		FIXED scale= DivSafe(M7_D<<16, vc.z);	// (.16 / .8) = .8 
+		FIXED scale= DivSafe(M7_D<<16, vc.z);	// (.16 / .8) = .8
 
 		// Base anchoring equation:
 		// x = q0 - s - A(p0 - s/2)

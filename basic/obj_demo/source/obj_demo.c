@@ -12,7 +12,7 @@ OBJ_ATTR obj_buffer[128];
 OBJ_AFFINE *obj_aff_buffer= (OBJ_AFFINE*)obj_buffer;
 
 // testing a few sprite things
-// D-pad: move 
+// D-pad: move
 // SELECT: switch palette
 // START: toggle mapping mode
 // A: horizontal flip
@@ -24,9 +24,9 @@ void obj_test()
 	u32 tid= 0, pb= 0;		// tile id, pal-bank
 
 	OBJ_ATTR *metr= &obj_buffer[0];
-	obj_set_attr(metr, 
+	obj_set_attr(metr,
 		ATTR0_SQUARE,				// Square, regular sprite
-		ATTR1_SIZE_64,					// 64x64p, 
+		ATTR1_SIZE_64,					// 64x64p,
 		ATTR2_PALBANK(pb) | tid);		// palbank 0, tile 0
 
 	// position sprite (redundant here; the _real_ position
@@ -52,7 +52,7 @@ void obj_test()
 			metr->attr1 ^= ATTR1_HFLIP;
 		if(key_hit(KEY_B))	// vertically
 			metr->attr1 ^= ATTR1_VFLIP;
-		
+
 		// make it glow (via palette swapping)
 		pb= key_is_down(KEY_SELECT) ? 1 : 0;
 
@@ -70,7 +70,7 @@ void obj_test()
 
 int main()
 {
-	// Places the glyphs of a 4bpp boxed metroid sprite 
+	// Places the glyphs of a 4bpp boxed metroid sprite
 	//   into LOW obj memory (cbb == 4)
 	memcpy(&tile_mem[4][0], metrTiles, metrTilesLen);
 	memcpy(pal_obj_mem, metrPal, metrPalLen);

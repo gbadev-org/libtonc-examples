@@ -45,7 +45,7 @@ typedef struct TMapInfo
 		};
 	};
 	// Destination data
-	SCR_ENTRY *dstMap;		//!< Screenblock pointer	
+	SCR_ENTRY *dstMap;		//!< Screenblock pointer
 	// Source data
 	SCR_ENTRY *srcMap;		//!< Source map address
 	u32 srcMapWidth;		//!< Source map width
@@ -58,10 +58,10 @@ typedef struct TMapInfo
 // === GLOBALS ========================================================
 
 
-VIEWPORT g_vp= 
+VIEWPORT g_vp=
 {
-	0, 0, 1024, 240, 
-	0, 0, 1024, 160, 
+	0, 0, 1024, 240,
+	0, 0, 1024, 160,
 };
 
 TMapInfo g_bg;
@@ -96,7 +96,7 @@ void vp_set_pos(VIEWPORT *vp, int x, int y)
 
 // --- TMapInfo ---
 
-void bgt_init(TMapInfo *bgt, int bgnr, u32 ctrl, 
+void bgt_init(TMapInfo *bgt, int bgnr, u32 ctrl,
 	const void *map, u32 map_width, u32 map_height)
 {
 	memset(bgt, 0, sizeof(TMapInfo));
@@ -125,7 +125,7 @@ void bgt_colcpy(TMapInfo *bgt, int tx, int ty)
 {
 	int iy, y0= ty&31;
 
-	int srcP= bgt->srcMapWidth;	
+	int srcP= bgt->srcMapWidth;
 	SCR_ENTRY *srcL= &bgt->srcMap[ty*srcP + tx];
 	SCR_ENTRY *dstL= &bgt->dstMap[y0*32 + (tx&31)];
 
@@ -142,7 +142,7 @@ void bgt_rowcpy(TMapInfo *bgt, int tx, int ty)
 {
 	int ix, x0= tx&31;
 
-	int srcP= bgt->srcMapWidth;	
+	int srcP= bgt->srcMapWidth;
 	SCR_ENTRY *srcL= &bgt->srcMap[ty*srcP + tx];
 	SCR_ENTRY *dstL= &bgt->dstMap[(ty&31)*32 + x0];
 
@@ -186,7 +186,7 @@ void bgt_update(TMapInfo *bgt, VIEWPORT *vp)
 }
 
 void init_textbox(int bgnr, int left, int top, int right, int bottom)
-{	
+{
 	tte_set_margins(left, top, right, bottom);
 
 	REG_DISPCNT |= DCNT_WIN0;
@@ -211,7 +211,7 @@ void init_main()
 	LZ77UnCompVram(kakarikoTiles, tile_mem[0]);
 	GRIT_CPY(pal_bg_mem, kakarikoPal);
 
-	bgt_init(&g_bg, 1, BG_CBB(0)|BG_SBB(29), kakarikoMap, 
+	bgt_init(&g_bg, 1, BG_CBB(0)|BG_SBB(29), kakarikoMap,
 		128, 128);
 
 	// Object setup
@@ -229,14 +229,14 @@ void init_main()
 	//init_textbox(0, 8, 8, SCR_W-8, 8+2*12);
 
 	init_textbox(0, 8, SCR_H-(8+2*12), SCR_W-8, SCR_H-8);
-	REG_DISPCNT= DCNT_MODE0 | DCNT_BG0 | DCNT_BG1 | DCNT_OBJ | 
+	REG_DISPCNT= DCNT_MODE0 | DCNT_BG0 | DCNT_BG1 | DCNT_OBJ |
 		DCNT_OBJ_1D | DCNT_WIN0;
 }
 
 int main()
 {
 	init_main();
-	
+
 	int x, y;
 
 	while(1)
@@ -256,7 +256,7 @@ int main()
 
 		bgt_update(&g_bg, &g_vp);
 
-		tte_printf("#{es;P}( x, y) = (%d,%d)\n(vx,vy) = (%d,%d)", 
+		tte_printf("#{es;P}( x, y) = (%d,%d)\n(vx,vy) = (%d,%d)",
 			x, y, g_vp.x, g_vp.y);
 		pal_bg_mem[0]= REG_VCOUNT;
 	}

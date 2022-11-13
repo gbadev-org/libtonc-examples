@@ -13,7 +13,7 @@
 #define AX	(16<<8)		// X-anchor
 #define AY	(16<<8)		// Y-anchor
 #define X0	 120		// base X
-#define Y0	 36			// base Y	
+#define Y0	 36			// base Y
 
 void obj_rs_ex2(OBJ_ATTR *obj, OBJ_AFFINE *oa, AFF_SRC_EX *asx);
 
@@ -39,34 +39,34 @@ OBJ_AFFINE *obj_aff_buffer= (OBJ_AFFINE*)obj_buffer;
 const OBJ_ATTR obj_data[7]=
 {
 	// obj[0]  , oa[0]: 1 full 32x32p double-affine circle
-	{ 0x0300, 0x8200, 0x0000, 0x0000 }, 
-	// obj[1-2], oa[1]: 2 32x16p double-affine semi-circles 
-	{ 0x4300, 0x8200, 0x0000, 0x0000 }, 
-	{ 0x4300, 0x8200, 0x0008, 0x0000 }, 
+	{ 0x0300, 0x8200, 0x0000, 0x0000 },
+	// obj[1-2], oa[1]: 2 32x16p double-affine semi-circles
+	{ 0x4300, 0x8200, 0x0000, 0x0000 },
+	{ 0x4300, 0x8200, 0x0008, 0x0000 },
 	// obj[3-7], oa[1]: 4 16x16p double-affine quarter-circles
-	{ 0x0300, 0x4400, 0x0010, 0x0000 }, 
-	{ 0x0300, 0x4400, 0x0014, 0x0000 }, 
-	{ 0x0300, 0x4400, 0x0018, 0x0000 }, 
-	{ 0x0300, 0x4400, 0x001C, 0x0000 }, 
+	{ 0x0300, 0x4400, 0x0010, 0x0000 },
+	{ 0x0300, 0x4400, 0x0014, 0x0000 },
+	{ 0x0300, 0x4400, 0x0018, 0x0000 },
+	{ 0x0300, 0x4400, 0x001C, 0x0000 },
 };
 
 POINT sub_pos[7]=
 {
 	{0,0},
-	{0,0},{0,AY}, 
-	{0,0},{AX,0}, {0,AY},{AX,AY}, 
+	{0,0},{0,AY},
+	{0,0},{AX,0}, {0,AY},{AX,AY},
 };
 
 OACOMBO oacs[3]=
 {
 	// full 32x32p double-affine circle
-	{ &obj_buffer[0], &sub_pos[0], 1, 
+	{ &obj_buffer[0], &sub_pos[0], 1,
 		{(X0-48)<<8, Y0<<8}, {AX, AY}, 256, 256, 0 },
 	// 2 32x16p double-affine semi-circles
-	{ &obj_buffer[1], &sub_pos[1], 2, 
+	{ &obj_buffer[1], &sub_pos[1], 2,
 		{(X0+16)<<8, Y0<<8}, {AX, AY}, 256, 256, 0 },
 	// 4 16x16p double-affine quarter-circles
-	{ &obj_buffer[3], &sub_pos[3], 4, 
+	{ &obj_buffer[3], &sub_pos[3], 4,
 		{(X0-16)<<8, (Y0+40)<<8}, {AX, AY}, 256, 256, 0 },
 };
 
@@ -78,8 +78,8 @@ void oac_rotscale(OACOMBO *oac)
 	// --- create P ---
 	int sx= oac->sx, sy= oac->sy;
 	int sina= lu_sin(oac->alpha)>>4, cosa= lu_cos(oac->alpha)>>4;
-	
-	OBJ_AFFINE *oaff= 
+
+	OBJ_AFFINE *oaff=
 		&obj_aff_buffer[BFN_GET(oac->sub_obj->attr1, ATTR1_AFF_ID)];
 	oaff->pa=  cosa*sx>>8;	oaff->pb= -sina*sx>>8;
 	oaff->pc=  sina*sy>>8;	oaff->pd=  cosa*sy>>8;
@@ -102,10 +102,10 @@ void oac_rotscale(OACOMBO *oac)
 		int dx, dy;		// all .8f
 		sx= oam_sizes[obj->attr0>>14][obj->attr1>>14][0]<<7;
 		sy= oam_sizes[obj->attr0>>14][obj->attr1>>14][1]<<7;
-		
+
 		dx= oac->pos.x+oac->anchor.x - sx;	// .8f
 		dy= oac->pos.y+oac->anchor.y - sy;	// .8f
-		
+
 		if(obj->attr0&ATTR0_AFF_DBL_BIT)
 		{	dx -= sx;	dy -= sy;	}
 
@@ -114,7 +114,7 @@ void oac_rotscale(OACOMBO *oac)
 
 		dx -= (aa*sx + ab*sy)>>8;		// .8f
 		dy -= (ac*sx + ad*sy)>>8;		// .8f
-		obj_set_pos(obj, dx>>8, dy>>8);	
+		obj_set_pos(obj, dx>>8, dy>>8);
 
 		obj++;	pt++;
 	}
@@ -136,7 +136,7 @@ void init_main()
 	tte_init_con();
 
 	// Some labels
-	tte_printf("#{P:%d,%d}1 full #{P:%d,%d}2 semi #{P:%d,%d}4 quarts", 
+	tte_printf("#{P:%d,%d}1 full #{P:%d,%d}2 semi #{P:%d,%d}4 quarts",
 		X0-48, Y0-16, X0+20, Y0-16, X0-20, Y0+74);
 }
 
@@ -169,7 +169,7 @@ int alt_main()
 {
 	init_main();
 
-	AFF_SRC_EX asxs[7]= 
+	AFF_SRC_EX asxs[7]=
 	{
 		// 1 32x32p double-affine circle
 		{ 16<<8, 16<<8, 32, 36, 256, 256, 0 },
@@ -184,7 +184,7 @@ int alt_main()
 	};
 
 	int ii, alpha=0;
-	
+
 	while(1)
 	{
 		vid_vsync();

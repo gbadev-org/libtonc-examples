@@ -51,7 +51,7 @@ void test_tte_se4()
 		0,						// Tile offset (special cattr)
 		CLR_YELLOW,				// Ink color
 		14,						// BitUnpack offset (on-pixel = 15)
-		NULL,					// Default font (sys8) 
+		NULL,					// Default font (sys8)
 		NULL);					// Default renderer (se_drawg_s)
 
 	// Init some colors
@@ -125,7 +125,7 @@ void test_tte_ase()
 		bg_rotscale_ex(&REG_BG_AFFINE[2], &asx);
 
 		if(key_hit(KEY_START))
-			break;		
+			break;
 	}
 }
 
@@ -140,7 +140,7 @@ void test_tte_bmp16()
 	tte_init_bmp(3, &yesh1Font, bmp16_drawg);
 	tte_init_con();
 
-	const char *str= 
+	const char *str=
 	"http://en.wikipedia.org/wiki/Subpixel_rendering :\n"
 	"Subpixel rendering is a way to increase the "
 	"apparent \nresolution of a computer's liquid crystal "
@@ -176,7 +176,7 @@ void test_tte_obj()
 		0,					// attr2: nothing special
 		CLR_YELLOW,			// Yellow ink
 		0x0E,				// ink pixel 14+1 = 15
-		&vwf_default,			// Verdana 9 font 
+		&vwf_default,			// Verdana 9 font
 		NULL);				// Default renderer (obj_drawg)
 
 	pal_obj_bank[1][15]= CLR_RED;
@@ -198,14 +198,14 @@ void test_tte_obj()
 		for(ii=0; ii<len; ii++)
 		{
 			int ti= t-ii*0x380;				// Get the path param for ii
-			obj_set_pos(&objs[-ii], 
+			obj_set_pos(&objs[-ii],
 				(96*lu_cos(  ti)>>12)+120,	// y= Ay*cos(  t) + y0
 				(64*lu_sin(2*ti)>>12)+80);	// x= Ax*sin(2*t) + x0
 		}
 		t += 0x00A0;
 
 		if(key_hit(KEY_START))
-			break;		
+			break;
 	}
 }
 
@@ -262,7 +262,7 @@ void test_tte_chr4c()
 	{
 		VBlankIntrWait();
 		key_poll();
-		
+
 		// Scroll and blend
 		x = clamp(x + key_tri_horz(), 0, 512+1-SCREEN_WIDTH);
 		y = clamp(y + key_tri_vert(), 0, 512+1-SCREEN_HEIGHT);
@@ -274,10 +274,10 @@ void test_tte_chr4c()
 
 		// Erase and print new position.
 		tte_printf("#{es;P}%d, %d", x, y);
-		
+
 		if(key_hit(KEY_START))
-			break;		
-	}	
+			break;
+	}
 }
 
 
@@ -291,7 +291,7 @@ void test_fonts()
 	tte_init_chr4c(0, BG_CBB(0)|BG_SBB(31), 0, 0x0201, CLR_YELLOW, NULL, NULL);
 	tte_init_con();
 
-	const TFont *fontTable[4]= 
+	const TFont *fontTable[4]=
 	{
 		&verdana9Font, &verdana9iFont, &verdana9bFont, &verdana10Font
 	};
@@ -317,7 +317,7 @@ void test_vt()
 
 	tte_init_bmp(3, NULL, NULL);
 	tte_init_con();
-	
+
 	iprintf("\033[24;30H Hello \033[8A t \033[1C h \033[1C a \033[1C r!");
 
 	key_wait_till_hit(KEY_ANY);
@@ -343,14 +343,14 @@ void test_bmp8_slide()
 }
 
 
-//! Set up a rectangle for text, with the non-text layers darkened for contrast. 
+//! Set up a rectangle for text, with the non-text layers darkened for contrast.
 void win_textbox(int bgnr, int left, int top, int right, int bottom, int bldy)
 {
 	REG_WIN0H= left<<8 | right;
 	REG_WIN0V=  top<<8 | bottom;
 	REG_WIN0CNT= WIN_ALL | WIN_BLD;
 	REG_WINOUTCNT= WIN_ALL;
-	
+
 	REG_BLDCNT= (BLD_ALL&~BIT(bgnr)) | BLD_BLACK;
 	REG_BLDY= bldy;
 
@@ -363,26 +363,26 @@ void win_textbox(int bgnr, int left, int top, int right, int bottom, int bldy)
 // Item list
 // --------------------------------------------------------------------
 
-const TMenuItem cUnits[]= 
+const TMenuItem cUnits[]=
 {
 	{
-		"se4: 4bpp tilemap", 
+		"se4: 4bpp tilemap",
 		"TTE on regular tilemaps (4bit). \n"
-		"Shows colors and font change.", 
+		"Shows colors and font change.",
 		test_tte_se4
 	},
 	{
-		"ase: affine tilemap", 
+		"ase: affine tilemap",
 		"TTE on affine tilemaps.",
 		test_tte_ase
 	},
 	{
-		"bmp16: 16bpp subpixel font", 
-		"Some mode 3 text using a 4x8 sub-pixel \nfont.", 
+		"bmp16: 16bpp subpixel font",
+		"Some mode 3 text using a 4x8 sub-pixel \nfont.",
 		test_tte_bmp16
-	}, 
+	},
 	{
-		"obj: object text", 
+		"obj: object text",
 		"Write a string using objects and play with \n"
 		"it a little. The font is verdana 9 (vwf_default), \n"
 		"illustrating non-8x8 glyph sizes.",
@@ -390,42 +390,42 @@ const TMenuItem cUnits[]=
 	},
 	{
 		"chr4 : text in a box",
-		"Tile-plotting over a text-box for in-game text", 
+		"Tile-plotting over a text-box for in-game text",
 		test_tte_chr4c
 	},
 	{
-		"TTE font use", 
+		"TTE font use",
 		"Use different glyph-sets for italic, bold\n"
-		"and size.", 
+		"and size.",
 		test_fonts
 	},
  	{
-		"VT100 sequences", 
+		"VT100 sequences",
 		"Use VT100 escape sequences for formatting\n",
 		test_vt
-	}, 
+	},
 	{
-		"TTE Profiling", 
+		"TTE Profiling",
 		"Test the speed of the standard renderers.\n"
 		"Press any key to go to the next renderer.\n",
 		test_speeds
 	},
 	{
-		"chr4: 4bpp tiles slide show", 
+		"chr4: 4bpp tiles slide show",
 		"A slide show demonstrating the TTE \n"
-		"capabilities for 4bit tiles (mode 0).", 
+		"capabilities for 4bit tiles (mode 0).",
 		test_chr4c_slide
 	},
 	{
-		"bmp8: 8bpp bitmap slide show", 
+		"bmp8: 8bpp bitmap slide show",
 		"A slide show demonstrating the TTE \n"
-		"capabilities for 8bit bitmaps (mode 4).", 
+		"capabilities for 8bit bitmaps (mode 4).",
 		test_bmp8_slide
 	},
 	{
-		"bmp16: 16bpp bitmap slide show", 
+		"bmp16: 16bpp bitmap slide show",
 		"A slide show demonstrating the TTE \n"
-		"capabilities for 16bit bitmaps (mode 3).", 
+		"capabilities for 16bit bitmaps (mode 3).",
 		test_bmp16_slide
 	}
 };
@@ -437,7 +437,7 @@ int main()
 
 	TMenu menu;
 	menu_create(&menu, cUnits, countof(cUnits));
-	
+
 	while(1)
 	{
 		menu_init(&menu);

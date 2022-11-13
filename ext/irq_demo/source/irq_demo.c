@@ -16,23 +16,23 @@ void vct_wait();
 void vct_wait_nest();
 
 
-CSTR strings[]= 
+CSTR strings[]=
 {
-	"asm/nested",	"c/direct", 
+	"asm/nested",	"c/direct",
 	"VCount",		"HBlank"
 };
 
 // Function pointers to master isrs.
-const fnptr master_isrs[2]= 
+const fnptr master_isrs[2]=
 {
 	(fnptr)isr_master,
-	(fnptr)hbl_grad_direct 
+	(fnptr)hbl_grad_direct
 };
 
 // VCount interrupt routines.
-const fnptr vct_isrs[2]= 
+const fnptr vct_isrs[2]=
 {
-	vct_wait, 
+	vct_wait,
 	vct_wait_nest
 };
 
@@ -72,7 +72,7 @@ int main()
 
 	REG_DISPCNT= DCNT_MODE0 | DCNT_BG0;
 
-	// (3) Initialise irqs; add HBL and VCT isrs 
+	// (3) Initialise irqs; add HBL and VCT isrs
 	// and set VCT to trigger at 80
 	irq_init(master_isrs[0]);
 	irq_add(II_HBLANK, hbl_grad_routed);
@@ -95,7 +95,7 @@ int main()
 		if(key_hit(KEY_L))
 			REG_IE ^= IRQ_VCOUNT;
 
-		// (4) Toggle between 
+		// (4) Toggle between
 		// asm switchblock + hbl_gradient (red, descending)
 		// or purely hbl_isr_in_c (green, ascending)
 		if(key_hit(KEY_A))
@@ -112,7 +112,7 @@ int main()
 			irq_add(II_VCOUNT, vct_isrs[bVctPrio]);
 		}
 
-		tte_printf("#{es;P}ISR#{X:32}: %s\nPrio#{X:32}: %s\nIE#{X:32}: %04X", 
+		tte_printf("#{es;P}ISR#{X:32}: %s\nPrio#{X:32}: %s\nIE#{X:32}: %04X",
 			strings[bDirect], strings[2+bVctPrio], REG_IE);
 	}
 

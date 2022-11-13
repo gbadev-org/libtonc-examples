@@ -37,10 +37,10 @@ void test_mosaic()
 		ppt->x= clamp(ppt->x, 0, 0x80);
 		ppt->y= clamp(ppt->y, 0, 0x80);
 
-		REG_MOSAIC= MOS_BUILD(pt_bg.x>>3, pt_bg.y>>3, 
+		REG_MOSAIC= MOS_BUILD(pt_bg.x>>3, pt_bg.y>>3,
 			pt_obj.x>>3, pt_obj.y>>3);
 
-		tte_printf("#{es;P}obj h,v: %2d,%2d\n bg h,v: %2d,%2d", 
+		tte_printf("#{es;P}obj h,v: %2d,%2d\n bg h,v: %2d,%2d",
 			pt_obj.x>>3, pt_obj.y>>3, pt_bg.x>>3, pt_bg.y>>3);
 	}
 }
@@ -55,7 +55,7 @@ void load_metr()
 
 	// create object: oe0
 	OBJ_ATTR *metr= &oam_mem[0];
-	obj_set_attr(metr, ATTR0_SQUARE | ATTR0_MOSAIC, ATTR1_SIZE_64, 0);		
+	obj_set_attr(metr, ATTR0_SQUARE | ATTR0_MOSAIC, ATTR1_SIZE_64, 0);
 	obj_set_pos(metr, 32, 24);				// left-center
 
 	// create bg map: bg1, cbb1, sbb 31
@@ -82,7 +82,7 @@ int main()
 	tte_init_con();
 
 	REG_DISPCNT= DCNT_BG0 | DCNT_BG1 | DCNT_OBJ | DCNT_OBJ_1D;
-	
+
 	test_mosaic();
 
 	return 0;

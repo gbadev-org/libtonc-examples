@@ -1,5 +1,5 @@
-// snd1_demo.c: 
-// Beep! ^_^ 
+// snd1_demo.c:
+// Beep! ^_^
 //
 // (20060125 - 20060125, Cearn)
 //
@@ -30,7 +30,7 @@ void note_play(int note, int octave)
 {
 	// Clear next top and current rows
 	SBB_CLEAR_ROW(31, (txt_scrolly/8-2)&31);
-	SBB_CLEAR_ROW(31, txt_scrolly/8);	
+	SBB_CLEAR_ROW(31, txt_scrolly/8);
 
 	// Display note and scroll
 	tte_printf("#{P:16,%d;cx:0}%-2s%+2d", txt_scrolly, names[note], octave);
@@ -67,7 +67,7 @@ int main()
 	tte_init_se(0, BG_CBB(0) | BG_SBB(31), 0, CLR_ORANGE, 0, NULL, NULL);
 	tte_init_con();
 	pal_bg_mem[0x11]= CLR_GREEN;
-	
+
 	int octave= 0;
 
 	// turn sound on
@@ -112,7 +112,7 @@ int main()
 
 		// Play ditty
 		if(key_hit(KEY_B))
-			sos();		
+			sos();
 	}
 	return 0;
 }

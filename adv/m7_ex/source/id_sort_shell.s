@@ -9,7 +9,7 @@
 	.align 	2
 @ DECL: CODE_IN_IWRAM void id_sort_shell(int keys[], u8 ids[], int count)
 @ r0: sort key (oe.fill)
-@ r1: sort indices 
+@ r1: sort indices
 @ r2: array length
 @ r3: inc
 @ r4, r5, r6: inc, ii, jj, jj-inc

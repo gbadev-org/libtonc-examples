@@ -35,7 +35,7 @@ void init_main()
 	REG_BG_AFFINE[2]= bg_aff_default;
 
 	// --- obj ---
-	const TILE dot= 
+	const TILE dot=
 	{{ 0, 0, 0x00011000, 0x00122100, 0x00122100, 0x00011000, 0, 0}};
 	tile_mem[4][1]= dot;
 	pal_obj_mem[1]= CLR_LIME;
@@ -80,7 +80,7 @@ int main()
 			pal_bg_mem[oct_curr+OCT_PAL_START]= CLR_SILVER;
 			oct_prev= oct_curr;
 		}
-			
+
 		if(key_hit(KEY_START))
 		{
 			state ^= OCT_STATE_ROT;

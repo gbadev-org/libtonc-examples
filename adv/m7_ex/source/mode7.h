@@ -49,7 +49,7 @@ typedef struct M7_SPRITE
 } M7_SPRITE;
 
 //! 3D camera struct
-typedef struct M7_CAM 
+typedef struct M7_CAM
 {
 	VECTOR pos;		//!< World position.
 	int theta;		//!< Polar angle.
@@ -77,7 +77,7 @@ extern M7_LEVEL m7_level;
 
 // === PROTOTYPES =====================================================
 
-void m7_init(M7_LEVEL *level, M7_CAM *cam, BG_AFFINE bg_aff[], 
+void m7_init(M7_LEVEL *level, M7_CAM *cam, BG_AFFINE bg_aff[],
 	M7_SPRITE sprites[], u16 skycnt, u16 floorcnt);
 void m7_prep_horizon(M7_LEVEL *level);
 void m7_update_sky(const M7_LEVEL *level);

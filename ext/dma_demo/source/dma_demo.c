@@ -13,8 +13,8 @@
 u16 g_winh[SCREEN_HEIGHT+1];
 
 //! Create an array of horizontal offsets for a circular window.
-/*!	The offsets are to be copied to REG_WINxH each HBlank, either 
-*	  by HDMA or HBlank isr. Offsets provided by modified 
+/*!	The offsets are to be copied to REG_WINxH each HBlank, either
+*	  by HDMA or HBlank isr. Offsets provided by modified
 *	  Bresenham's circle routine (of course); the clipping code is not
 *	  optional.
 *	\param winh	Pointer to array to receive the offsets.
@@ -35,18 +35,18 @@ void win_circle(u16 winh[], int x0, int y0, int rr)
 		// Side octs
 		tmp  = clamp(x0+y, 0, SCREEN_WIDTH+1);
 		tmp += clamp(x0-y, 0, SCREEN_WIDTH+1)<<8;
-		
+
 		if(IN_RANGE(y0-x, 0, SCREEN_HEIGHT))		// o4, o7
 			winh[y0-x]= tmp;
 		if(IN_RANGE(y0+x, 0, SCREEN_HEIGHT))		// o0, o3
 			winh[y0+x]= tmp;
 
 		// Change in y: top/bottom octs
-		if(d >= 0)		
+		if(d >= 0)
 		{
 			tmp  = clamp(x0+x, 0, SCREEN_WIDTH+1);
 			tmp += clamp(x0-x, 0, SCREEN_WIDTH+1)<<8;
-			
+
 			if(IN_RANGE(y0-y, 0, SCREEN_HEIGHT))	// o5, o6
 				winh[y0-y]= tmp;
 			if(IN_RANGE(y0+y, 0, SCREEN_HEIGHT))	// o1, o2
@@ -75,9 +75,9 @@ void init_main()
 	REG_BG2VOFS= 64;
 
 	// --- Init BG 1 (mask) ---
-	const TILE tile= 
+	const TILE tile=
 	{{
-		0xF2F3F2F3, 0x3F2F3F2F, 0xF3F2F3F2, 0x2F3F2F3F, 
+		0xF2F3F2F3, 0x3F2F3F2F, 0xF3F2F3F2, 0x2F3F2F3F,
 		0xF2F3F2F3, 0x3F2F3F2F, 0xF3F2F3F2, 0x2F3F2F3F
 	}};
 	tile_mem[0][32]= tile;
@@ -123,13 +123,13 @@ int main()
 
 		// Fill circle array
 		win_circle(g_winh, x0, y0, rr);
-	
+
 		// Init win-circle HDMA
 		DMA_TRANSFER(&REG_WIN0H, &g_winh[1], 1, 3, DMA_HDMA);
 
 		tte_printf("#{es;P}%d %d | %d ", x0, y0, rr);
 	}
-	
+
 	return 0;
-} 
+}
 

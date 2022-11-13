@@ -33,7 +33,7 @@ enum eMenuOpt
 {	MENU_MOVE=0, MENU_FOG, MENU_OBJ_VIEW, MENU_RESET, MENU_EXIT	};
 
 #define STATE_MOVE_LOCAL	(0<<0)
-#define STATE_MOVE_LEVEL	(1<<0)	
+#define STATE_MOVE_LEVEL	(1<<0)
 #define STATE_MOVE_GLOBAL	(2<<0)
 #define STATE_FOG			(1<<2)
 #define STATE_OBJ_VIEW_ATAN	(1<<3)
@@ -58,10 +58,10 @@ int sort_keys[SPR_COUNT];
 
 // --- constants (TODO: move elsewhere) ---
 
-const M7_CAM m7_cam_default= 
+const M7_CAM m7_cam_default=
 {
-	{ 0x0D100, 0x1900, 0x38800 }, 
-	0x0A00, 0x2600, 
+	{ 0x0D100, 0x1900, 0x38800 },
+	0x0A00, 0x2600,
 	{ 256, 0, 0 }, {0, 256, 0}, {0, 0, 256}
 };
 
@@ -70,7 +70,7 @@ const M7_CAM m7_cam_default=
 
 #if 0
 
-const VECTOR cKartPos[8]= 
+const VECTOR cKartPos[8]=
 {
 	{ 0x39000, 0x0, 0x2A800 }, 	// Mario
 	{ 0x3B000, 0x0, 0x2C000 }, 	// Luigi
@@ -82,14 +82,14 @@ const VECTOR cKartPos[8]=
 	{ 0x3B000, 0x0, 0x35000 } 	// Toad
 };
 
-const s16 cKartPhi[8]= 
+const s16 cKartPhi[8]=
 {
 	0, 0, 0, 0, 0, 0, 0, 0
 };
 
 #else
 
-const VECTOR cKartPos[8]= 
+const VECTOR cKartPos[8]=
 {
 	{ 0x21C00, 0x0, 0x14000 }, 	// Mario
 	{ 0x1C600, 0x0, 0x20800 }, 	// Luigi
@@ -101,42 +101,42 @@ const VECTOR cKartPos[8]=
 	{ 0x10000, 0x0, 0x35800 } 	// Toad
 };
 
-const s16 cKartPhi[8]= 
+const s16 cKartPhi[8]=
 {
 	0x4000, 0x1000, 0, 0, 0x7000, 0, 0x4200, 0x5600
 };
 
 #endif
 
-const u16 cKartAttr2[8]= 
-{	
-	0x1420, 0x2430, 0x3440, 0x0450, 
-	0x0460, 0x3470, 0x2480, 0x1490 
+const u16 cKartAttr2[8]=
+{
+	0x1420, 0x2430, 0x3440, 0x0450,
+	0x0460, 0x3470, 0x2480, 0x1490
 };
 
-const u8 cKartFrames[32]= 
+const u8 cKartFrames[32]=
 {
-	 0,  1,  2, 3, 4, 5, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11, 
-	11, 10, 10, 9, 9, 8, 8, 7, 7, 6, 5, 4, 3,  2,  1,  0, 
+	 0,  1,  2, 3, 4, 5, 6, 7, 7, 8, 8, 9, 9, 10, 10, 11,
+	11, 10, 10, 9, 9, 8, 8, 7, 7, 6, 5, 4, 3,  2,  1,  0,
 };
 
 const VECTOR cThwompPos[16]=
 {
-	{ 0x18400, 0x1000, 0x02000 }, 
-	{ 0x18400, 0x0C00, 0x03000 }, 
-	{ 0x18400, 0x0800, 0x04000 }, 
-	{ 0x18400, 0x0400, 0x05000 }, 
-	{ 0x0A000, 0x1000, 0x35C00 }, 
-	{ 0x0B000, 0x1000, 0x39C00 }, 
-	{ 0x0D800, 0x1000, 0x37400 }, 
-	{ 0x0F800, 0x0400, 0x35400 }, 
-	{ 0x1B800, 0x0800, 0x1FC00 }, 
-	{ 0x1C800, 0x0200, 0x1FC00 }, 
-	{ 0x1D800, 0x0200, 0x1FC00 }, 
-	{ 0x1E800, 0x1000, 0x1FC00 }, 
-	{ 0x2AC00, 0x1000, 0x3A000 }, 
-	{ 0x2B400, 0x0400, 0x3C800 }, 
-	{ 0x2D000, 0x1000, 0x38800 }, 
+	{ 0x18400, 0x1000, 0x02000 },
+	{ 0x18400, 0x0C00, 0x03000 },
+	{ 0x18400, 0x0800, 0x04000 },
+	{ 0x18400, 0x0400, 0x05000 },
+	{ 0x0A000, 0x1000, 0x35C00 },
+	{ 0x0B000, 0x1000, 0x39C00 },
+	{ 0x0D800, 0x1000, 0x37400 },
+	{ 0x0F800, 0x0400, 0x35400 },
+	{ 0x1B800, 0x0800, 0x1FC00 },
+	{ 0x1C800, 0x0200, 0x1FC00 },
+	{ 0x1D800, 0x0200, 0x1FC00 },
+	{ 0x1E800, 0x1000, 0x1FC00 },
+	{ 0x2AC00, 0x1000, 0x3A000 },
+	{ 0x2B400, 0x0400, 0x3C800 },
+	{ 0x2D000, 0x1000, 0x38800 },
 	{ 0x2D000, 0x1000, 0x3B800 }
 
 };
@@ -169,15 +169,15 @@ void kart_animate(M7_SPRITE *spr, const M7_CAM *cam)
 
 	if(BFN_GET2(obj->attr0,ATTR0_MODE) == ATTR0_HIDE)
 		return;
-	 
+
 	// NOTE 1: Yes, I really do need the s16 for psi here.
-	// NOTE 2: or not, if I used arctan for the angle, like I 
+	// NOTE 2: or not, if I used arctan for the angle, like I
 	//   probably should.
 	TILE *dst= &tile_mem[4][BFN_GET(obj->attr2, ATTR2_ID)];
 	s16 psi= spr->phi - cam->phi;
-	
+
 	// Extra arctan angle for correctness
-	if(g_state & STATE_OBJ_VIEW_ATAN) 
+	if(g_state & STATE_OBJ_VIEW_ATAN)
 		psi -= ArcTan2(spr->pos2.z>>8, spr->pos2.x>>8);
 
 	memcpy32(dst, &spr->tiles[cKartFrames[(psi>>11)&31]*16], 16*8);
@@ -220,7 +220,7 @@ void update_sprites()
 void init_main()
 {
 	// Init mode 7
-	m7_init(&m7_level, &m7_cam, m7_bgaffs, m7_sprites,  	
+	m7_init(&m7_level, &m7_cam, m7_bgaffs, m7_sprites,
 		BG_CBB(0) | BG_SBB(22) | BG_REG_64x32 | BG_PRIO(3),
 		BG_CBB(0) | BG_SBB(24) | BG_AFF_128x128 | BG_WRAP | BG_PRIO(3));
 	*m7_level.camera = m7_cam_default;
@@ -266,7 +266,7 @@ void init_sprites()
 		spr->pos= cKartPos[ii];
 		spr->anchor.x= 16;
 		spr->anchor.y= 30;
-		obj_set_attr(&spr->obj, ATTR0_SQUARE | ATTR0_AFF_DBL, 
+		obj_set_attr(&spr->obj, ATTR0_SQUARE | ATTR0_AFF_DBL,
 			ATTR1_SIZE_32 | ATTR1_AFF_ID(ii), cKartAttr2[ii]);
 		spr->phi= cKartPhi[ii];
 		spr->obj_id= ii;
@@ -282,7 +282,7 @@ void init_sprites()
 		spr->pos= cThwompPos[ii];
 		spr->anchor.x= 16;
 		spr->anchor.y= 30;
-		obj_set_attr(&spr->obj, ATTR0_SQUARE | ATTR0_AFF_DBL, 
+		obj_set_attr(&spr->obj, ATTR0_SQUARE | ATTR0_AFF_DBL,
 			ATTR1_SIZE_32 | ATTR1_AFF_ID(ii+8), 0x4410);
 		spr->phi= 0;
 		spr->obj_id= ii+8;
@@ -301,7 +301,7 @@ void init_menu()
 {
 	int ii;
 
-	tte_init_se(0, BG_CBB(1) | BG_SBB(7), MENU_TEXT_SE0, CLR_BLUE, 0xEE, 
+	tte_init_se(0, BG_CBB(1) | BG_SBB(7), MENU_TEXT_SE0, CLR_BLUE, 0xEE,
 		NULL, NULL);
 	tte_init_con();
 
@@ -341,7 +341,7 @@ void input_game()
 {
 	const FIXED VEL_H= 0x200, VEL_Y= 0x80, OMEGA= 0x140;
 	VECTOR dir= {0, 0, 0};
-	
+
 	dir.x= VEL_H*key_tri_shoulder();	// strafe
 
 	if(key_is_down(KEY_SELECT))
@@ -352,7 +352,7 @@ void input_game()
 	M7_CAM *cam= m7_level.camera;
 
 	// Change camera orientation
-	m7_rotate(cam, 
+	m7_rotate(cam,
 		cam->phi   + OMEGA*key_tri_horz(),	// look left/right
 		cam->theta - OMEGA*key_tri_vert());	// look up.down
 
@@ -373,12 +373,12 @@ void input_game()
 	// Don't sink through the ground
 	if(cam->pos.y < 2<<8)
 		cam->pos.y= 2<<8;
-		
+
 	if(key_hit(KEY_START))
 	{
 		REG_DISPCNT |= DCNT_BG0;
 		g_state |= STATE_MENU;
-	}	
+	}
 }
 
 void input_menu()
@@ -433,7 +433,7 @@ void input_menu()
 
 		case MENU_RESET:
 			// REG_RESET_DST needs to be set to 1 for multiboot games
-			// __text_start is a DKP variable indicating the start of 
+			// __text_start is a DKP variable indicating the start of
 			// code, so if this is in EWRAM we know it's MB
 			// Should probably go in a function though
 
@@ -472,7 +472,7 @@ int main()
 		{
 			BFN_SET(REG_DISPCNT, DCNT_MODE0, DCNT_MODE);
 			REG_BG2CNT= m7_level.bgcnt_sky;
-			REG_BLDALPHA= 16;	
+			REG_BLDALPHA= 16;
 		}
 		m7_update_sky(&m7_level);
 

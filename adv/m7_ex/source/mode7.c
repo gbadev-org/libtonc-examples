@@ -20,7 +20,7 @@
 
 // === FUNCTIONS ======================================================
 
-void m7_init(M7_LEVEL *level, M7_CAM *cam, BG_AFFINE bgaff[], 
+void m7_init(M7_LEVEL *level, M7_CAM *cam, BG_AFFINE bgaff[],
 	M7_SPRITE sprites[], u16 skycnt, u16 floorcnt)
 {
 	level->camera= cam;
@@ -33,7 +33,7 @@ void m7_init(M7_LEVEL *level, M7_CAM *cam, BG_AFFINE bgaff[],
 	REG_BG2CNT= floorcnt;
 	REG_BG_AFFINE[2]= bg_aff_default;
 }
-	
+
 //! Calculate the horizon scanline
 void m7_prep_horizon(M7_LEVEL *level)
 {
@@ -51,7 +51,7 @@ void m7_prep_horizon(M7_LEVEL *level)
 	}
 	else	// looking straight down (w.y > 0) means horizon at -inf scanline
 		horz= cam->w.y > 0 ? INT_MIN : INT_MAX;
-	
+
 	level->horizon= horz;
 }
 
@@ -65,7 +65,7 @@ void m7_rotate(M7_CAM *cam, int phi, int theta)
 
 	cf= lu_cos(phi)>>4;		sf= lu_sin(phi)>>4;
 	ct= lu_cos(theta)>>4;	st= lu_sin(theta)>>4;
-	
+
 	// camera X-axis (right)
 	cam->u.x= cf;
 	cam->u.y= 0;

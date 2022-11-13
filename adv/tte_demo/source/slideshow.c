@@ -1,7 +1,7 @@
 //
 // Slide-show for TTE demonstration
 //
-//! \file 
+//! \file
 //! \author J Vijn
 //! \date 20070903 - 20070903
 //
@@ -14,21 +14,21 @@
 
 
 // --------------------------------------------------------------------
-// CONSTANTS 
+// CONSTANTS
 // --------------------------------------------------------------------
 
-enum ESlideStringIDs 
+enum ESlideStringIDs
 {
-	SLIDE_FONT_STD=0, SLIDE_FONT_I, SLIDE_FONT_B, SLIDE_FONT_H1, 
-	SLIDE_WAIT0, SLIDE_WAIT1, SLIDE_WAIT2, 
+	SLIDE_FONT_STD=0, SLIDE_FONT_I, SLIDE_FONT_B, SLIDE_FONT_H1,
+	SLIDE_WAIT0, SLIDE_WAIT1, SLIDE_WAIT2,
 	SLIDE_PAGE,
-	SLIDE_PAPER_STD, SLIDE_PAPER1, SLIDE_PAPER2, SLIDE_PAPER3, SLIDE_PAPER4, 
-	SLIDE_INK_STD, SLIDE_INK_KEYW, SLIDE_INK_CMD, SLIDE_INK_FTR, SLIDE_INK_H1, 
+	SLIDE_PAPER_STD, SLIDE_PAPER1, SLIDE_PAPER2, SLIDE_PAPER3, SLIDE_PAPER4,
+	SLIDE_INK_STD, SLIDE_INK_KEYW, SLIDE_INK_CMD, SLIDE_INK_FTR, SLIDE_INK_H1,
 	SLIDE_STR_MAX
 };
 
 // --------------------------------------------------------------------
-// CLASSES 
+// CLASSES
 // --------------------------------------------------------------------
 
 typedef struct TSlide
@@ -39,10 +39,10 @@ typedef struct TSlide
 } TSlide;
 
 // --------------------------------------------------------------------
-// GLOBALS 
+// GLOBALS
 // --------------------------------------------------------------------
 
-COLOR cSlidePal[16]= 
+COLOR cSlidePal[16]=
 {
 	0x1084, 0x28E7, 0x454A, 0x61AD, 0x7E10,      0, 0, 0,
 	0x43FF, 0x0218, 0x7E1F, 0x6F7B, 0x7E10, 0x0280, 0, 0
@@ -51,27 +51,27 @@ COLOR cSlidePal[16]=
 
 char gStringBuffer[32];		// For page-number variable (and others >_>)
 
-CSTR cSlideClrid[]= 
+CSTR cSlideClrid[]=
 {
-	"#{cp:0}", "#{cp:1}", "#{cp:2}", "#{cp:3}", "#{cp:4}", 
-	"#{ci:8}", "#{ci:9}", "#{ci:10}", "#{ci:11}","#{ci:12}", 
+	"#{cp:0}", "#{cp:1}", "#{cp:2}", "#{cp:3}", "#{cp:4}",
+	"#{ci:8}", "#{ci:9}", "#{ci:10}", "#{ci:11}","#{ci:12}",
 };
 
-CSTR cSlideRGB[]= 
+CSTR cSlideRGB[]=
 {
-	"#{cp:0x1084}", "#{cp:0x28E7}", "#{cp:0x454A}", "#{cp:0x61AD}", "#{cp:0x7E10}", 
-	"#{ci:0x43FF}", "#{ci:0x0218}", "#{ci:0x7E1F}", "#{ci:0x6F7B}", "#{ci:0x7E10}", 
+	"#{cp:0x1084}", "#{cp:0x28E7}", "#{cp:0x454A}", "#{cp:0x61AD}", "#{cp:0x7E10}",
+	"#{ci:0x43FF}", "#{ci:0x0218}", "#{ci:0x7E1F}", "#{ci:0x6F7B}", "#{ci:0x7E10}",
 };
 
 
-const char *gSlideStrings[SLIDE_STR_MAX]= 
+const char *gSlideStrings[SLIDE_STR_MAX]=
 {
-	"#{f:0}", "#{f:1}", "#{f:2}", "#{f:3}", 
-	"#{w:5}", "#{w:30}", "#{w:60}", gStringBuffer, 
+	"#{f:0}", "#{f:1}", "#{f:2}", "#{f:3}",
+	"#{w:5}", "#{w:30}", "#{w:60}", gStringBuffer,
 	// 10 empty for colors
 };
 
-const TFont *cSlideFonts[4]= 
+const TFont *cSlideFonts[4]=
 {
 	&verdana9Font, &verdana9iFont, &verdana9bFont, &verdana11Font
 };
@@ -82,19 +82,19 @@ const TFont *cSlideFonts[4]=
 #{ms;P;f:0;s:8;s:13}
 	#{f:3;s:17}Menu#{f:0;s:13}
 	Choose render type
-	
+
 		\t#{s:14}ase#{s:13} : Affine tilemaps\n
 		\t#{s:14}bmp16#{s:13} : 16bpp bitmaps\n
 		\t#{s:14}bmp8#{s:13} : 8bpp bitmaps\n
 		\t#{s:14}chr4#{s:13} : 4bpp tiles\n
 		\t#{s:14}obj#{s:13} : objects\n
 		\t#{s:14}se#{s:13} : Regular tilemaps\n
-	
+
 	<footer>(A ->)</footer>
 </slide>
 */
 
-CSTR cSlideText0[]= 
+CSTR cSlideText0[]=
 {
 	"Scripting is done with '#{s:14}brace-controls#{s:13}':\n" ,
 	"#{s:14}\\#{#{s:13}#{s:15}foo:bar;#{s:13}#{s:14}}#{s:13}.\n",
@@ -108,7 +108,7 @@ CSTR cSlideText0[]=
 	"\tand frame-waits, as you can see (#{s:15}w#{s:13}) \n",
 };
 
-CSTR cSlideText1[]= 
+CSTR cSlideText1[]=
 {
 	"Uppercase #{s:15}X:##{s:13}, #{s:15}Y:##{s:13} "
 		"and #{s:15}P:#,##{s:13} control\n",
@@ -122,10 +122,10 @@ CSTR cSlideText1[]=
 	"#{s:15}Pr#{s:13}."
 };
 
-CSTR cSlideText2[]= 
+CSTR cSlideText2[]=
 {
 	"Lowercase #{s:15}x:##{s:13}, #{s:15}y:##{s:13} "
-		"and #{s:15}p:#,##{s:13} control\n", 
+		"and #{s:15}p:#,##{s:13} control\n",
 	"relative positioning.#{s:5}"
 	"#{P:32,48}Start here.#{s:5}"
 	"#{x:48}#{s:15}{x:48}#{s:13}#{s:5}",
@@ -133,20 +133,20 @@ CSTR cSlideText2[]=
 	"#{p:-160,-8}#{s:15}{p:-160,-8}#{s:13}#{s:5}"
 };
 
-CSTR cSlideText3[]= 
+CSTR cSlideText3[]=
 {
 	"There are four ligh#{s:5}...#{s:6; el;P; s:5}",
 	"There are four colors, used for different purposes#{s:5}\n",
 	"\t#{s:14}ink#{s:13} (#{s:15}ci:##{s:13})\n",
 	"\t#{s:14}shadow#{s:13} (#{s:15}cs:##{s:13})\n",
 	"\t#{s:14}paper#{s:13} (#{s:15}cp:##{s:13})\n",
-	"\t#{s:14}special#{s:13} (#{s:15}cx:##{s:13})\n",	
+	"\t#{s:14}special#{s:13} (#{s:15}cx:##{s:13})\n",
 	"#{s:5}Usually, only ink and paper are relevant.#{s:5}\n\n",
 	"Note that #{s:14}color#{s:13} can refer to a real color\n",
 	"or palette index, depending on context."
 };
 
-CSTR cSlideText4[]= 
+CSTR cSlideText4[]=
 {
 	"Using a #{s:14}font-table#{s:13}, one can select\n",
 	"different fonts with #{s:15}f:##{s:13}. For example:\n#{s:5}",
@@ -159,12 +159,12 @@ CSTR cSlideText4[]=
 	"1bpp and in tile-strips."
 };
 
-CSTR cSlideText5[]= 
+CSTR cSlideText5[]=
 {
 	"The #{s:14}margins#{s:13} indicate the active rectangle\n",
 	"on screen, It is used for character wrapping and \n",
-	"the erasers. The margins can be set with #{s:15}ml:##{s:13},\n", 
-	"#{s:15}mt:##{s:13}, #{s:15}mr:##{s:13}, #{s:15}mb:##{s:13}, or ", 
+	"the erasers. The margins can be set with #{s:15}ml:##{s:13},\n",
+	"#{s:15}mt:##{s:13}, #{s:15}mr:##{s:13}, #{s:15}mb:##{s:13}, or ",
 	"#{s:15}m:#,#,#,##{s:13} for all.\n",
 	"Erasing is done with #{s:15}es#{s:13}, #{s:15}el#{s:13}, ",
 	"#{s:15}eb#{s:13}, #{s:15}ef#{s:13}.#{s:6}#{s:6}\n",
@@ -180,9 +180,9 @@ CSTR cSlideText5[]=
 	"#{ms}",
 };
 
-const TSlide cSlides[]= 
+const TSlide cSlides[]=
 {
-	{ "TTE Scripting",		cSlideText0, countof(cSlideText0)	}, 
+	{ "TTE Scripting",		cSlideText0, countof(cSlideText0)	},
 	{ "Absolute positions", cSlideText1, countof(cSlideText1)	},
 	{ "Relative positions", cSlideText2, countof(cSlideText2)	},
 	{ "Colors",				cSlideText3, countof(cSlideText3)	},
@@ -213,7 +213,7 @@ const TSlide cSlides[]=
 */
 
 // --------------------------------------------------------------------
-// FUNCTIONS 
+// FUNCTIONS
 // --------------------------------------------------------------------
 
 
@@ -229,7 +229,7 @@ int slide_run(const TSlide *slides, int id)
 	// Header (centered)
 	tte_write("#{f:3;s:17}");
 	pt= tte_get_text_size(sl->header);
-	iprintf("#{p:%d,2}%s#{f:0;s:13;ml:8;mt:16;P;s:5}", 
+	iprintf("#{p:%d,2}%s#{f:0;s:13;ml:8;mt:16;P;s:5}",
 		(SCREEN_WIDTH-pt.x)/2,  sl->header);
 
 	// Run through slide script
@@ -243,9 +243,9 @@ int slide_run(const TSlide *slides, int id)
 	tte_write("#{s:6}");
 	siprintf(gStringBuffer, "[%d]", id);
 	pt= tte_get_text_size(gStringBuffer);
-	iprintf("#{s:16;f:2; P:4,146}<- B#{X:%d;s:7;X:212}A ->", 
+	iprintf("#{s:16;f:2; P:4,146}<- B#{X:%d;s:7;X:212}A ->",
 		(SCREEN_WIDTH-pt.x)/2);
-	
+
 	//# Wait for action (then wait a little longer)
 	while(1)
 	{
@@ -269,18 +269,18 @@ int slide_menu()
 
 	// Set-up start screen (chr4)
 	REG_DISPCNT= DCNT_MODE0 | DCNT_BG2;
-	tte_init_chr4c(2, BG_CBB(0)|BG_SBB(31), 0, 0x08, 0, NULL, 
+	tte_init_chr4c(2, BG_CBB(0)|BG_SBB(31), 0, 0x08, 0, NULL,
 		(fnDrawg)chr4c_drawg_b1cts_fast);
 	tte_init_con();
 
 	memcpy16(pal_bg_mem, cSlidePal, 16);
 
-	CSTR menuStr[]= 
-	{ 
-		"chr4: 4bpp tiles (m0)", 
-		"bmp16: 16bpp bitmap (m3)", 
-		"bmp8: 8bpp bitmap (m4)" 
-	}; 
+	CSTR menuStr[]=
+	{
+		"chr4: 4bpp tiles (m0)",
+		"bmp16: 16bpp bitmap (m3)",
+		"bmp8: 8bpp bitmap (m4)"
+	};
 
 	int ii, sel= 0;
 
@@ -334,12 +334,12 @@ void slide_show(int mode)
 	{
 	case 0:			// chr4
 		REG_DISPCNT= DCNT_MODE0 | DCNT_BG2;
-		tte_init_chr4c(2, BG_CBB(0)|BG_SBB(31), 0, 0x08, 0, NULL, 
+		tte_init_chr4c(2, BG_CBB(0)|BG_SBB(31), 0, 0x08, 0, NULL,
 			(fnDrawg)chr4c_drawg_b1cts_fast);
 
 		for(ii=0; ii<10; ii++)
 			gSlideStrings[ii+8]= cSlideClrid[ii];
-		
+
 		break;
 	case 1:			// bmp16
 		REG_DISPCNT= DCNT_MODE3 | DCNT_BG2;

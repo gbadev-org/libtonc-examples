@@ -17,7 +17,7 @@ SCR_ENTRY *bg0_map= se_mem[SBB_0];
 
 
 u32 se_index(u32 tx, u32 ty, u32 pitch)
-{	
+{
 	u32 sbb= ((tx>>5)+(ty>>5)*(pitch>>5));
 
 	return sbb*1024 + ((tx&31)+(ty&31)*32);
@@ -33,9 +33,9 @@ void init_map()
 	REG_BG0VOFS= 0;
 
 	// create the tiles: basic tile and a cross
-	const TILE tiles[2]= 
+	const TILE tiles[2]=
 	{
-		{{0x11111111, 0x01111111, 0x01111111, 0x01111111, 
+		{{0x11111111, 0x01111111, 0x01111111, 0x01111111,
 		  0x01111111, 0x01111111, 0x01111111, 0x00000001}},
 		{{0x00000000, 0x00100100, 0x01100110, 0x00011000,
 		  0x00011000, 0x01100110, 0x00100100, 0x00000000}},
@@ -49,7 +49,7 @@ void init_map()
 	pal_bg_bank[2][1]= RGB15( 0,  0, 31);
 	pal_bg_bank[3][1]= RGB15(16, 16, 16);
 
-	// Create a map: four contingent blocks of 
+	// Create a map: four contingent blocks of
 	//   0x0000, 0x1000, 0x2000, 0x3000.
 	SCR_ENTRY *pse= bg0_map;
 	for(ii=0; ii<4; ii++)
@@ -63,7 +63,7 @@ int main()
 	REG_DISPCNT= DCNT_MODE0 | DCNT_BG0 | DCNT_OBJ;
 
 	u32 tx, ty, se_curr, se_prev= CROSS_TY*32+CROSS_TX;
-	
+
 	bg0_map[se_prev]++;	// initial position of cross
 	while(1)
 	{
@@ -78,7 +78,7 @@ int main()
 		// the screen at all times.
 		tx= ((bg0_pt.x>>3)+CROSS_TX) & 0x3F;
 		ty= ((bg0_pt.y>>3)+CROSS_TY) & 0x3F;
-		
+
 		se_curr= se_index(tx, ty, 64);
 		if(se_curr != se_prev)
 		{

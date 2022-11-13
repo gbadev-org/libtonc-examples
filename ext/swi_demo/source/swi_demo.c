@@ -2,7 +2,7 @@
 // swi_demo.c
 //
 // Demonstrates software interrupt
-// Note that swi.c uses inline assembly, which is 
+// Note that swi.c uses inline assembly, which is
 // compiler dependent. The THUMB/ARM thing is nicely
 // circumvented by defining the swi_call macro.
 //
@@ -23,11 +23,11 @@ void VBlankIntrWait()
 {	swi_call(0x05);	}
 
 int Div(int num, int denom)
-{	
+{
 	s32 result;
 	swi_call_r0(0x06, result);
 	return result;
-	//swi_call(0x06);	
+	//swi_call(0x06);
 }
 
 u32 Sqrt(u32 num)
@@ -44,8 +44,8 @@ void ObjAffineSet(const AFF_SRC *src, void *dst, int num, int offset)
 // === swi demos ======================================================
 
 // NOTE!
-// To be consistent with general mathematical graphs, the 
-// y-axis has to be reversed and the origin moved to the 
+// To be consistent with general mathematical graphs, the
+// y-axis has to be reversed and the origin moved to the
 // either the bottom or mid of the screen via
 // "iy = H - y"
 // or
@@ -92,7 +92,7 @@ void arctan2_demo()
 		m3_plot(ix, hh - y/256, CLR_MAG);
 	}
 	tte_printf("#{P:144,40;ci:%d}atan", CLR_MAG);
-	
+
 	// pick some random memory to show the range of arctan2
 	OBJ_ATTR *obj= &oam_mem[4];
 	obj->attr0= ArcTan2( 0x100,  0x100);	// q0 : 0x2000 (pi*1/4)
@@ -113,7 +113,7 @@ void aff_demo()
 	for(ix=0; ix<SCREEN_WIDTH; ix++)
 	{
 		ObjAffineSet(&af_src, &af_dest, 1, BG_AFF_OFS);
-		cc= 80*af_dest.pa>>8; 
+		cc= 80*af_dest.pa>>8;
 		ss= af_dest.pc>>8;
 		m3_plot(ix, 80 - cc, CLR_YELLOW);
 		m3_plot(ix, 80 - ss, CLR_CYAN);
@@ -139,8 +139,8 @@ int main()
 	aff_demo();
 
 	arctan2_demo();
-	
+
 	while(1);
-	
+
 	return 0;
 }

@@ -30,7 +30,7 @@ void win_textbox(int bgnr, int left, int top, int right, int bottom, int bldy)
 	REG_WIN0V=  top<<8 | bottom;
 	REG_WIN0CNT= WIN_ALL | WIN_BLD;
 	REG_WINOUTCNT= WIN_ALL;
-	
+
 	REG_BLDCNT= (BLD_ALL&~BIT(bgnr)) | BLD_BLACK;
 	REG_BLDY= bldy;
 
@@ -41,9 +41,9 @@ void win_textbox(int bgnr, int left, int top, int right, int bottom, int bldy)
 
 void init_cross()
 {
-	TILE cross= 
-	{{  
-		0x00011100, 0x00100010, 0x01022201, 0x01021201, 
+	TILE cross=
+	{{
+		0x00011100, 0x00100010, 0x01022201, 0x01021201,
 		0x01022201, 0x00100010, 0x00011100, 0x00000000,
 	}};
 	tile_mem[4][1]= cross;
@@ -78,7 +78,7 @@ void init_map()
 
 void sbb_aff()
 {
-	AFF_SRC_EX asx= 
+	AFF_SRC_EX asx=
 	{
 		32<<8, 64<<8,			// Map coords.
 		120, 80,				// Screen coords.
@@ -107,7 +107,7 @@ void sbb_aff()
 		// rotate
 		asx.alpha -= 128*key_tri_shoulder();
 
-		
+
 		// B: scale up ; B+Se : scale down
 		if(key_is_down(KEY_B))
 			ss += (key_is_down(KEY_SELECT) ? -1 : 1);
@@ -123,7 +123,7 @@ void sbb_aff()
 				asx.alpha= 0;
 				ss= 1<<8;
 			}
-			else					
+			else
 				REG_BG2CNT ^= BG_WRAP;
 		}
 
@@ -137,10 +137,10 @@ void sbb_aff()
 		obj_set_pos(obj_cross, asx.scr_x-3, (asx.scr_y-3));
 		obj_set_pos(obj_disp, (bgaff.dx>>8)-3, (bgaff.dy>>8)-3);
 
-		tte_printf("#{es;P}p0\t: (%d, %d)\nq0\t: (%d, %d)\ndx\t: (%d, %d)", 
-			asx.tex_x>>8, asx.tex_y>>8, asx.scr_x, asx.scr_y, 
+		tte_printf("#{es;P}p0\t: (%d, %d)\nq0\t: (%d, %d)\ndx\t: (%d, %d)",
+			asx.tex_x>>8, asx.tex_y>>8, asx.scr_x, asx.scr_y,
 			bgaff.dx>>8, bgaff.dy>>8);
-	}	
+	}
 }
 
 int main()

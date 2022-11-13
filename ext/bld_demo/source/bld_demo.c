@@ -38,7 +38,7 @@ void test_blend()
 		eva += key_tri_horz();
 		evb -= key_tri_vert();
 		ey  += key_tri_fire();
-		
+
 		mode += bit_tribool(key_hit(-1), KI_R, KI_L);
 
 		// clamp to allowable ranges
@@ -49,14 +49,14 @@ void test_blend()
 
 		tte_printf("#{es;P}mode :\t%2d\neva :\t%2d\nevb :\t%2d\ney :\t%2d",
 			mode, eva/8, evb/8, ey/8);
-		
+
 		// Update blend mode
 		BFN_SET(REG_BLDCNT, mode, BLD_MODE);
 
 		// Update blend weights
 		REG_BLDALPHA= BLDA_BUILD(eva/8, evb/8);
 		REG_BLDY= BLDY_BUILD(ey/8);
-	}	
+	}
 }
 
 void load_metr()
@@ -67,7 +67,7 @@ void load_metr()
 	memcpy32(pal_obj_mem, metrPal, metrPalLen/4);
 
 	// Set the metroid sprite
-	obj_set_attr(&oam_mem[0], ATTR0_SQUARE | ATTR0_BLEND | ATTR0_Y(24), 
+	obj_set_attr(&oam_mem[0], ATTR0_SQUARE | ATTR0_BLEND | ATTR0_Y(24),
 		ATTR1_SIZE_64 | ATTR1_X(32), 0);
 
 	// Create the metroid bg using inverted palette for bg-metroid
@@ -87,8 +87,8 @@ void load_metr()
 void load_fence()
 {
 	// tile 0 / ' ' will be a fence tile
-	const TILE fence= 
-	{{ 
+	const TILE fence=
+	{{
 		0x00012000, 0x00012000, 0x00022200, 0x22220222,
 		0x11122211, 0x00112000, 0x00012000, 0x00012000,
 	}};
@@ -112,9 +112,9 @@ int main()
 	tte_init_chr4c_b4_default(0, BG_CBB(0)|BG_SBB(31));
 	tte_init_con();
 
-	REG_DISPCNT= DCNT_MODE0 | DCNT_BG0 | DCNT_BG1 | DCNT_BG2 | 
+	REG_DISPCNT= DCNT_MODE0 | DCNT_BG0 | DCNT_BG1 | DCNT_BG2 |
 		DCNT_OBJ | DCNT_OBJ_1D;
-	
+
 	test_blend();
 
 	return 0;

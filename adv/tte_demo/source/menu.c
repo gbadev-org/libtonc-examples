@@ -23,7 +23,7 @@ void menu_act_description(const TMenu *menu);
 
 
 // --------------------------------------------------------------------
-// FUNCTIONS 
+// FUNCTIONS
 // --------------------------------------------------------------------
 
 //! Create the menu itself.
@@ -50,7 +50,7 @@ void menu_init(TMenu *menu)
 	// Setup video mode, palette, text, VRAM
 	// Graphic inits
 	key_repeat_limits(40, 20);
-	
+
 	vid_page= vid_mem;
 	tte_init_bmp_default(4);
 	tte_init_con();
@@ -64,14 +64,14 @@ void menu_init(TMenu *menu)
 	for(ii=0; ii<nn; ii++)
 		pal_bg_mem[MENU_PAL_TEXT_BASE+ii]= MENU_CLR_TEXT;
 
-	REG_DISPCNT= DCNT_MODE4 | DCNT_BG2;	
+	REG_DISPCNT= DCNT_MODE4 | DCNT_BG2;
 }
 
 
 //! Run the menu.
 void menu_run(TMenu *menu)
 {
-	// Initial Draw 
+	// Initial Draw
 	menu_draw(menu);
 
 	int sel= clamp(menu->sel, 0, menu->itemCount);
@@ -92,7 +92,7 @@ void menu_run(TMenu *menu)
 		if(key_repeat(KEY_DOWN | KEY_UP))
 		{
 			sel += KEY_TRIBOOL(key_repeat, KI_DOWN, KI_UP);
-			sel	 = wrap(sel, 0, selmax);	
+			sel	 = wrap(sel, 0, selmax);
 		}
 		else if(key_repeat(KEY_RIGHT | KEY_LEFT))
 		{
@@ -108,11 +108,11 @@ void menu_run(TMenu *menu)
 		if(sel>>3 != page)
 		{
 			page= sel>>3;
-			menu_draw(menu);				
+			menu_draw(menu);
 		}
 		menu_update_page(menu);
 
-		// if KEY_ACCEPT: break	
+		// if KEY_ACCEPT: break
 		if(key_hit(KEY_ACCEPT))
 			break;
 	}
@@ -151,7 +151,7 @@ void menu_act(TMenu *menu)
 			{
 				menu->sel= ii;
 				mi= &menu->items[menu->sel];
-				
+
 				if(mi->proc == NULL)
 					continue;
 
@@ -160,8 +160,8 @@ void menu_act(TMenu *menu)
 				VBlankIntrDelay(5);
 				mi->proc();
 				VBlankIntrDelay(5);
-			}			
-		}	
+			}
+		}
 	}
 }
 
@@ -173,15 +173,15 @@ void menu_draw(const TMenu *menu)
 	RLUnCompVram(menu_gfxBitmap, vid_page);
 
 	// Draw page
-	page= menu->sel/8;	
+	page= menu->sel/8;
 	nn= min(8, menu->itemCount-page*8);
 	TMenuItem *mi= &menu->items[page*8];
 
 	// Plot item strings
 	for(ii=0; ii<nn; ii++)
-		//tte_printf("#{P:%d,%d;ci:%d}\xC2\x95 %s", 
-		tte_printf("#{P:%d,%d;ci:%d}* %s", 
-			cMenuMainRect.left, cMenuMainRect.top+14*ii, 
+		//tte_printf("#{P:%d,%d;ci:%d}\xC2\x95 %s",
+		tte_printf("#{P:%d,%d;ci:%d}* %s",
+			cMenuMainRect.left, cMenuMainRect.top+14*ii,
 			MENU_PAL_TEXT_BASE+ii, mi[ii].title);
 
 	menu_update_page(menu);
@@ -190,7 +190,7 @@ void menu_draw(const TMenu *menu)
 	char str[32];
 	sprintf(str, "%d/%d", page+1, (menu->itemCount+7)/8);
 	POINT16 pt= tte_get_text_size(str);
-	tte_printf("#{P:%d,138;ci:%d}%s", cMenuPageRect.right-pt.x, 
+	tte_printf("#{P:%d,138;ci:%d}%s", cMenuPageRect.right-pt.x,
 		MENU_PAL_TEXT, str);
 }
 
@@ -200,7 +200,7 @@ void menu_update_page(const TMenu *menu)
 	int ii, nn, page;
 
 	// Update menu items
-	page= menu->sel/8;	
+	page= menu->sel/8;
 	nn= min(8, menu->itemCount-page*8);
 	for(ii=0; ii<nn; ii++)
 		menu_update_item(menu, page*8+ii);
@@ -235,7 +235,7 @@ void menu_act_clear(const TMenu *menu)
 	int ii, nn, page;
 
 	// clear other menu items
-	page = menu->sel/8;	
+	page = menu->sel/8;
 	nn= min(8, menu->itemCount-page*8);
 	COLOR *clr= &pal_bg_mem[MENU_PAL_TEXT_BASE];
 
@@ -262,12 +262,12 @@ void menu_act_description(const TMenu *menu)
 	if(menu->state != MENU_ACT_STD)
 	{
 		RegisterRamReset(RESET_GFX);
-		// Erase gfx registers (but not REG_DISPSTAT. That apparently 
+		// Erase gfx registers (but not REG_DISPSTAT. That apparently
 		// would be bad)
 		memset32((void*)REG_BGCNT, 0, 0x58/4);
 
 		REG_BG_AFFINE[2]= bg_aff_default;
-		
+
 		vid_page= vid_mem;
 		tte_init_bmp_default(4);
 		tte_init_con();
@@ -276,7 +276,7 @@ void menu_act_description(const TMenu *menu)
 		GRIT_CPY(pal_bg_mem, menu_gfxPal);
 		pal_bg_mem[0]= CLR_BLACK;
 
-		REG_DISPCNT= DCNT_MODE4 | DCNT_BG2;	
+		REG_DISPCNT= DCNT_MODE4 | DCNT_BG2;
 	}
 
 	// --- Run description ---
@@ -289,7 +289,7 @@ void menu_act_description(const TMenu *menu)
 	tte_set_font(&vwf_default);
 	tte_printf("#{P:8,20;ci:" XSTR(MENU_PAL_INK) "}%s",mi->description);
 	tte_set_margins(0, 0, SCR_W, SCR_H);
-	
+
 	if(menu->state == MENU_ACT_AUTO)
 	{
 		u32 len= max(strlen(mi->description), 60);

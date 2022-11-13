@@ -17,7 +17,7 @@
 #include "fonts.h"
 
 
-/* Testing for:				
+/* Testing for:
 
 // DKA r21
 							78			194				194/ WAITCNT=std
@@ -59,20 +59,20 @@ obj_drawg								 88872 / 458	+ 18
 
 
 
-CSTR glados[]= 
+CSTR glados[]=
 {
 "Please note that we have added a consequence for failure. "
 	"Any contact with the chamber floor will result in an "
 	"'unsatisfactory' mark on your official testing record "
-	"followed by death. Good luck!", 
+	"followed by death. Good luck!",
 "Assume the party escort submission "
-	"position or you will miss the party.", 
+	"position or you will miss the party.",
 "Okay. The test is over. You win. "
 	"Go back to the recovery annex. "
-	"For your cake.", 
+	"For your cake.",
 "[pain noise] You think you're doing "
 "some damage? Two plus two is ten... "
-	"IN BASE FOUR! I'M FINE!", 
+	"IN BASE FOUR! I'M FINE!",
 "I invited your best friend the companion "
 "cube. Of course, he couldn't come because you murdered him."
 };
@@ -82,7 +82,7 @@ typedef struct TProfiler TProfiler;
 struct TProfiler
 {
 	const char	*str;
-	void		(*proc)(TProfiler *prof, const char *str);	
+	void		(*proc)(TProfiler *prof, const char *str);
 	int			time;
 };
 
@@ -107,23 +107,23 @@ void prof_bmp16_drawg_b1cts(TProfiler *prof, const char *str);
 void prof_obj_drawg(TProfiler *prof, const char *str);
 
 
-TProfiler gProfs[]= 
+TProfiler gProfs[]=
 {
-	{	"null",				prof_null_drawg, 			0 }, 
-	{	"se",				prof_se_drawg, 				0 }, 
-	{	"se_w8h16",			prof_se_drawg_w8h16, 		0 }, 
-	{	"ase",				prof_ase_drawg, 			0 }, 
-	{	"ase_w8h16",		prof_ase_drawg_w8h16, 		0 }, 
-	{	"chr4c_b1cts_base",	prof_chr4c_drawg_b1cts_base,	0 }, 
-	{	"chr4c_b1cts",		prof_chr4c_drawg_b1cts	, 	0 }, 
-	{	"chr4c_b1cts_fast",	prof_chr4c_drawg_b1cts_fast, 0 }, 
-	{	"bmp8_b1cts_base",	prof_bmp8_drawg_b1cts_base, 0 }, 
-	{	"bmp8_b1cts",		prof_bmp8_drawg_b1cts, 		0 }, 
-	{	"bmp8_b1cts_fast",	prof_bmp8_drawg_b1cts_fast, 0 }, 
-	{	"bmp16_b1cts_base",	prof_bmp16_drawg_b1cts_base,0 }, 
-	{	"bmp16_b1cts",		prof_bmp16_drawg_b1cts, 	0 }, 
-	//{	"bmp16",			prof_bmp16_drawg, 			0 }, 
-	{	"obj",				prof_obj_drawg, 			0 }, 
+	{	"null",				prof_null_drawg, 			0 },
+	{	"se",				prof_se_drawg, 				0 },
+	{	"se_w8h16",			prof_se_drawg_w8h16, 		0 },
+	{	"ase",				prof_ase_drawg, 			0 },
+	{	"ase_w8h16",		prof_ase_drawg_w8h16, 		0 },
+	{	"chr4c_b1cts_base",	prof_chr4c_drawg_b1cts_base,	0 },
+	{	"chr4c_b1cts",		prof_chr4c_drawg_b1cts	, 	0 },
+	{	"chr4c_b1cts_fast",	prof_chr4c_drawg_b1cts_fast, 0 },
+	{	"bmp8_b1cts_base",	prof_bmp8_drawg_b1cts_base, 0 },
+	{	"bmp8_b1cts",		prof_bmp8_drawg_b1cts, 		0 },
+	{	"bmp8_b1cts_fast",	prof_bmp8_drawg_b1cts_fast, 0 },
+	{	"bmp16_b1cts_base",	prof_bmp16_drawg_b1cts_base,0 },
+	{	"bmp16_b1cts",		prof_bmp16_drawg_b1cts, 	0 },
+	//{	"bmp16",			prof_bmp16_drawg, 			0 },
+	{	"obj",				prof_obj_drawg, 			0 },
 };
 
 TFont gFont;
@@ -149,7 +149,7 @@ void chr4c_drawg_b1cts_base(uint gid)
 
 	uint ix, iy, iw;
 	for(iw=0; iw<charW; iw += 8)
-	{	
+	{
 		for(iy=0; iy<charH; iy++)
 		{
 			raw= srcL[iy];
@@ -175,7 +175,7 @@ void bmp8_drawg_b1cts_base(uint gid)
 
 	uint ix, iy, iw;
 	for(iw=0; iw<charW; iw += 8)
-	{	
+	{
 		for(iy=0; iy<charH; iy++)
 		{
 			raw= srcL[iy];
@@ -201,7 +201,7 @@ void bmp16_drawg_b1cts_base(uint gid)
 
 	uint ix, iy, iw;
 	for(iw=0; iw<charW; iw += 8)
-	{	
+	{
 		for(iy=0; iy<charH; iy++)
 		{
 			raw= srcL[iy];
@@ -239,10 +239,10 @@ void prof_null_drawg(TProfiler *prof, const char *str)
 {
 	RegisterRamReset(RESET_GFX);
 	REG_DISPCNT= DCNT_MODE3 | DCNT_BG2;
-	
+
 	tte_init_bmp(3, &gFont, null_drawg);
 
-	prof_draws(prof, str);	
+	prof_draws(prof, str);
 }
 
 void prof_se_drawg(TProfiler *prof, const char *str)
@@ -252,8 +252,8 @@ void prof_se_drawg(TProfiler *prof, const char *str)
 
 	int charH= gFont.charH;			gFont.charH= 16;
 	const u8 *widths= gFont.widths;	gFont.widths= NULL;
-	
-	tte_init_se(2, BG_CBB(0)|BG_SBB(24), 0, CLR_YELLOW, 0, 
+
+	tte_init_se(2, BG_CBB(0)|BG_SBB(24), 0, CLR_YELLOW, 0,
 		&gFont, se_drawg);
 
 	prof_draws(prof, str);
@@ -269,8 +269,8 @@ void prof_se_drawg_w8h16(TProfiler *prof, const char *str)
 
 	int charH= gFont.charH;			gFont.charH= 16;
 	const u8 *widths= gFont.widths;	gFont.widths= NULL;
-	
-	tte_init_se(2, BG_CBB(0)|BG_SBB(24), 0, CLR_YELLOW, 0, 
+
+	tte_init_se(2, BG_CBB(0)|BG_SBB(24), 0, CLR_YELLOW, 0,
 		&gFont, se_drawg_w8h16);
 
 	prof_draws(prof, str);
@@ -286,14 +286,14 @@ void prof_ase_drawg(TProfiler *prof, const char *str)
 
 	int charH= gFont.charH;			gFont.charH= 16;
 	const u8 *widths= gFont.widths;	gFont.widths= NULL;
-	
-	tte_init_ase(2, BG_CBB(0)|BG_SBB(24) | BG_AFF_32x32, 0, CLR_YELLOW, 0, 
+
+	tte_init_ase(2, BG_CBB(0)|BG_SBB(24) | BG_AFF_32x32, 0, CLR_YELLOW, 0,
 		&gFont, ase_drawg);
 
 	prof_draws(prof, str);
 
 	gFont.charH= charH;
-	gFont.widths= widths;	
+	gFont.widths= widths;
 }
 
 void prof_ase_drawg_w8h16(TProfiler *prof, const char *str)
@@ -303,22 +303,22 @@ void prof_ase_drawg_w8h16(TProfiler *prof, const char *str)
 
 	int charH= gFont.charH;			gFont.charH= 16;
 	const u8 *widths= gFont.widths;	gFont.widths= NULL;
-	
-	tte_init_ase(2, BG_CBB(0)|BG_SBB(24) | BG_AFF_32x32, 0, CLR_YELLOW, 0, 
+
+	tte_init_ase(2, BG_CBB(0)|BG_SBB(24) | BG_AFF_32x32, 0, CLR_YELLOW, 0,
 		&gFont, ase_drawg_w8h16);
 
 	prof_draws(prof, str);
 
 	gFont.charH= charH;
 	gFont.widths= widths;
-	
+
 }
 
 void prof_chr4c_base(TProfiler *prof, const char *str, fnDrawg proc)
 {
 	RegisterRamReset(RESET_GFX);
 	REG_DISPCNT= DCNT_MODE0 | DCNT_BG2;
-	
+
 	tte_init_chr4c(2, BG_CBB(0)|BG_SBB(24), 0xF000, 0x0201, CLR_YELLOW,
 		&gFont, proc);
 
@@ -345,10 +345,10 @@ void prof_bmp8_base(TProfiler *prof, const char *str, fnDrawg proc)
 	RegisterRamReset(RESET_GFX);
 	REG_DISPCNT= DCNT_MODE4 | DCNT_BG2;
 	vid_page= vid_mem;
-	
+
 	tte_init_bmp(4, &gFont, proc);
 
-	prof_draws(prof, str);	
+	prof_draws(prof, str);
 }
 
 void prof_bmp8_drawg_b1cts_base(TProfiler *prof, const char *str)
@@ -371,10 +371,10 @@ void prof_bmp16_base(TProfiler *prof, const char *str, fnDrawg proc)
 {
 	RegisterRamReset(RESET_GFX);
 	REG_DISPCNT= DCNT_MODE3 | DCNT_BG2;
-	
+
 	tte_init_bmp(3, &gFont, proc);
 
-	prof_draws(prof, str);	
+	prof_draws(prof, str);
 }
 
 void prof_bmp16_drawg_b1cts_base(TProfiler *prof, const char *str)
@@ -398,11 +398,11 @@ void prof_obj_drawg(TProfiler *prof, const char *str)
 {
 	RegisterRamReset(RESET_GFX);
 	REG_DISPCNT= DCNT_MODE0 | DCNT_OBJ | DCNT_OBJ_1D;
-	
-	tte_init_obj(&oam_mem[127], ATTR0_TALL, ATTR1_SIZE_8, 0, CLR_YELLOW, 0, 
+
+	tte_init_obj(&oam_mem[127], ATTR0_TALL, ATTR1_SIZE_8, 0, CLR_YELLOW, 0,
 		&gFont, obj_drawg);
 
-	prof_draws(prof, str);	
+	prof_draws(prof, str);
 }
 
 
@@ -435,7 +435,7 @@ void test_speeds()
 	for(ii=0; ii<countof(gProfs); ii++)
 	{
 		tte_set_special(SE_PALBANK(14+(ii&1)));
-		iprintf("%-17s %6d  %d\n", gProfs[ii].str, gProfs[ii].time, 
+		iprintf("%-17s %6d  %d\n", gProfs[ii].str, gProfs[ii].time,
 			gProfs[ii].time/len);
 	}
 

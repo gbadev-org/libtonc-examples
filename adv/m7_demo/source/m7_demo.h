@@ -1,6 +1,6 @@
 //
 // m7_isrs.c
-// Separate file for HBL interrupts because apparently it screws up 
+// Separate file for HBL interrupts because apparently it screws up
 //   on hardware now.
 
 #include <tonc.h>

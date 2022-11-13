@@ -15,8 +15,8 @@
 // === CONSTANTS ======================================================
 
 enum ELookDir
-{	
-	LOOK_RIGHT= 0, LOOK_DOWN, LOOK_LEFT, LOOK_UP, 
+{
+	LOOK_RIGHT= 0, LOOK_DOWN, LOOK_LEFT, LOOK_UP,
 };
 
 #define SPR_STATE_STAND		0x0100
@@ -37,9 +37,9 @@ typedef struct TSprite
 #endif // __LINK__
 
 
-// -------------------------------------------------------------------- 
+// --------------------------------------------------------------------
 // PROTOTYPES
-// -------------------------------------------------------------------- 
+// --------------------------------------------------------------------
 
 void link_init(TSprite *link, int x, int y, int obj_id);
 void link_set_state(TSprite *link, u32 state);

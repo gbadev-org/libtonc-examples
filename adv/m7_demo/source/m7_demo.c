@@ -2,7 +2,7 @@
 // m7_demo.c
 // block, sawtooth and smooth mode7 in one demo :)
 // Using pre-calculated LUTs, courtesy of my excellut program
-// 
+//
 //
 // Coordinate system:
 //
@@ -28,10 +28,10 @@
 
 static const VECTOR cam_pos_default= { 256<<8, 32<<8, 256<<8 };
 
-CSTR strings[]= 
+CSTR strings[]=
 {
-	"A: blocky", 
-	"B: sawtooth", 
+	"A: blocky",
+	"B: sawtooth",
 	"C: smooth"
 };
 
@@ -44,7 +44,7 @@ FIXED g_cosf= 1<<8, g_sinf= 0;	// temporaries for cos and sin cam_phi
 int g_state= M7_BLOCK;
 
 
-fnptr m7_isrs[3]= 
+fnptr m7_isrs[3]=
 {
 	(fnptr)m7_hbl_a,
 	(fnptr)m7_hbl_b,
@@ -61,7 +61,7 @@ void init_main()
 
 	GRIT_CPY(&tile8_mem[0][1], numsTiles);
 	GRIT_CPY(pal_bg_mem, numsPal);
-		
+
 	// Fill the map with a band pattern
 	for(ii=0; ii<16; ii++)
 		memset32(&se_mem[8][ii*16*16/2], quad8(ii+1), 16*16/4);
@@ -133,7 +133,7 @@ int main()
 
 void set_mode7_type(int type)
 {
-	type= wrap(type, M7_BLOCK, M7_SMOOTH+1); 
+	type= wrap(type, M7_BLOCK, M7_SMOOTH+1);
 
 	irq_add(II_HBLANK, m7_isrs[type]);
 

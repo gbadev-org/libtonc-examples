@@ -21,13 +21,13 @@
 
 
 // --- global buffers for window registers ---
-// This will allow you to poke them inside IWRAM, 
+// This will allow you to poke them inside IWRAM,
 // since you can't poke REG_WINx directly. :(
 
 typedef struct tagRECT_U8 { u8 ll, tt, rr, bb; } RECT_U8;
 
 // Objects in win0, BG in win1
-RECT_U8 win[2]= 
+RECT_U8 win[2]=
 {
 	{ 36, 20,  76,  60 },	// win0: 40x40 rect
 	{ 12, 12 ,228, 148 }	// win1: screen minus 12 margin.
@@ -62,7 +62,7 @@ void init_back_map()
 	}};
 
 	tile_mem[0][0x30]= back_tile;
-	
+
 	pal_bg_mem[0x21]= 0x09BA;
 	pal_bg_mem[0x22]= 0xC0DE;
 	pal_bg_mem[0x23]= 0x0015;
@@ -121,7 +121,7 @@ void test_win()
 
 		// randomize rocket position
 		if(key_hit(KEY_START))
-			obj_set_pos(&oam_mem[ROCKET_OID], 
+			obj_set_pos(&oam_mem[ROCKET_OID],
 				qran_range(0, 232), qran_range(0, 152));
 
 		win_copy();
@@ -139,7 +139,7 @@ int main()
 
 	// windowing inits
 	//win_init(DCNT_WIN0 | DCNT_WIN1);
-	REG_DISPCNT= DCNT_BG0 | DCNT_BG1 | DCNT_OBJ | 
+	REG_DISPCNT= DCNT_BG0 | DCNT_BG1 | DCNT_OBJ |
 		DCNT_OBJ_1D | DCNT_WIN0 | DCNT_WIN1;
 
 	REG_WININ= WININ_BUILD(WIN_OBJ, WIN_BG0);

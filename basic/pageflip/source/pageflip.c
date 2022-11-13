@@ -20,7 +20,7 @@ void load_gfx()
 
 	// You don't have to do everything with memcpy.
 	// In fact, for small blocks it might be better if you didn't.
-	// Just mind your types, though. No sense in copying from a 32bit 
+	// Just mind your types, though. No sense in copying from a 32bit
 	// array to a 16bit one.
 	u32 *dst= (u32*)pal_bg_mem;
 	for(ii=0; ii<8; ii++)
@@ -35,16 +35,16 @@ int main()
 	int ii=0;
 
 	while(1)
-	{		
+	{
 		while(KEY_DOWN_NOW(KEY_START)) ;	// pause with start
 
 		vid_vsync();
 		if(++ii == 60)
-		{	
-			ii=0;	
-			vid_flip();	
+		{
+			ii=0;
+			vid_flip();
 		}
 	}
-	
+
 	return 0;
 }
