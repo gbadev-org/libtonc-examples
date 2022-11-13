@@ -36,17 +36,17 @@ obj_rs_ex2:
 	mov		r3, r6
 	mul		r3, r4
 	asr		r3, r3, #12
-	strh	r3, [r1, #6]	
+	strh	r3, [r1, #6]
 	@ oa->pb = -sx*sina>>12
 	neg		r3, r6
 	mul		r3, r5
 	asr		r3, r3, #12
-	strh	r3, [r1, #14]	
+	strh	r3, [r1, #14]
 	@ oa->pc = sy*sina>>12
 	mov		r3, r7
 	mul		r3, r5
 	asr		r3, r3, #12
-	strh	r3, [r1, #22]	
+	strh	r3, [r1, #22]
 	@ oa->pd = sy*cosa>>12
 	mov		r3, r7
 	mul		r3, r4
@@ -68,7 +68,7 @@ obj_rs_ex2:
 		lsl		r0, #20
 		mov		r1, r7
 		bl		DivSafe
-		b		.Lrecip_done	
+		b		.Lrecip_done
 .Lsx_is_sy:
 		mov		r6, r0	@ finalize 1/sx if sx == sy
 .Lrecip_done:
@@ -143,7 +143,7 @@ obj_rs_ex2:
 	lsl		r4, r4, #16
 	and		r4, r3
 	lsr		r2, r3, #17		@ Y_MASK
-	and		r5, r2			@ 
+	and		r5, r2			@
 	orr		r4, r5			@ r4: (x&X_MASK)<<16 | (y&Y_MASK)
 	orr		r3, r2			@ X_MASK<<16 | Y_MASK
 	bic		r6, r3			@ attr0,attr1 bit-cleared
