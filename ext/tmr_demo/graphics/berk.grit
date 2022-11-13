@@ -1,0 +1,4 @@
+#
+# Berk : 64x64t, 4bpp, flat-layout, no map reduction, not compressed.
+#
+-gt -gB4 -mR! -mLf -aw24 -gT00FF00

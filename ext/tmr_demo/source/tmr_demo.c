@@ -5,12 +5,26 @@
 // Press start to start timer.
 //
 // (20031220 -20070809, Cearn)
+// (20221113, AntonioND)
  
 #include <stdio.h>
 #include <tonc.h>
 
 #include "berk.h"
 
+// Grit exports a tile array in which the first tile is empty. This gives us a
+// pointer to the first tile with data.
+#define TILE_SIZE       (8 * 8 / 2)
+#define TILES_START     (berkTiles + TILE_SIZE / sizeof(berkTiles[0]))
+
+const TFont berkFont= 
+{
+	TILES_START, 0, 0,
+	48, 11,
+	24, 40,
+	24, 40, 480, 
+	4, 0, 
+};
 
 void tmr_test()
 {
