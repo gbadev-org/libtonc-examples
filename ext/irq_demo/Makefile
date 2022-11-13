@@ -1,142 +1,178 @@
+#---------------------------------------------------------------------------------
+.SUFFIXES:
+#---------------------------------------------------------------------------------
+
+ifeq ($(strip $(DEVKITARM)),)
+$(error "Please set DEVKITARM in your environment. export DEVKITARM=<path to>devkitARM")
+endif
+
+include $(DEVKITARM)/gba_rules
+
+#---------------------------------------------------------------------------------
+# the LIBGBA path is defined in gba_rules, but we have to define LIBTONC ourselves
+#---------------------------------------------------------------------------------
+LIBTONC := $(DEVKITPRO)/libtonc
+
+#---------------------------------------------------------------------------------
+# TARGET is the name of the output
+# BUILD is the directory where object files & intermediate files will be placed
+# SOURCES is a list of directories containing source code
+# INCLUDES is a list of directories containing extra header files
+# DATA is a list of directories containing binary data
+# GRAPHICS is a list of directories containing files to be processed by grit
 #
-# irq_demo.mak
+# All directories are specified relative to the project directory where
+# the makefile is found
 #
-# makefile for a semi-simple interrupt demo
-# Uses a master-isr in C, which requires compilation as ARM code
-#
-# NOTE: for educational purposes only. For real work, use 
-# devkitPro's templates ( $(DEVKITPRO)/examples/gba/template )
-# or tonclib's templates ( $(TONCCODE)/lab/template )
+#---------------------------------------------------------------------------------
+TARGET		:= $(notdir $(CURDIR))
+BUILD		:= build
+SOURCES		:= source
+INCLUDES	:= include
+DATA		:=
+MUSIC		:=
+GRAPHICS	:= graphics
 
-PATH := $(DEVKITARM)/bin:$(PATH)
+#---------------------------------------------------------------------------------
+# options for code generation
+#---------------------------------------------------------------------------------
+ARCH	:=	-mthumb -mthumb-interwork
 
-# --- Project details -------------------------------------------------
+CFLAGS	:=	-g -Wall -O2\
+		-mcpu=arm7tdmi -mtune=arm7tdmi\
+		$(ARCH)
 
-PROJ    := irq_demo
-TITLE   := $(PROJ)
+CFLAGS	+=	$(INCLUDE)
 
-LIBTONC	:= ../../tonclib
+CXXFLAGS	:=	$(CFLAGS) -fno-rtti -fno-exceptions
 
-INCLUDE  := -I$(LIBTONC)/include
-LIBPATHS := -L$(LIBTONC)/lib
+ASFLAGS	:=	-g $(ARCH)
+LDFLAGS	=	-g $(ARCH) -Wl,-Map,$(notdir $*.map)
 
-LIBS    := -ltonc
+#---------------------------------------------------------------------------------
+# any extra libraries we wish to link with the project
+#---------------------------------------------------------------------------------
+LIBS	:= -lmm -ltonc
 
-# ROM, IWRAM, asm sources
-RCSRC   := $(PROJ).c
-ICSRC   := isr.iwram.c
-SSRC    :=
 
-# boot mode: cart/multiboot
-bMB     := 0
-# Generate asm for C files 
-bGENASM := 0
-# generate map file
-bMAP    := 0
+#---------------------------------------------------------------------------------
+# list of directories containing libraries, this must be the top level containing
+# include and lib
+#---------------------------------------------------------------------------------
+LIBDIRS	:=	$(LIBGBA) $(LIBTONC)
 
-# === The rest need not be altered (probably) =========================
+#---------------------------------------------------------------------------------
+# no real need to edit anything past this point unless you need to add additional
+# rules for different file extensions
+#---------------------------------------------------------------------------------
 
-CSRC    := $(RCSRC) $(ICSRC)
 
-RCOBJ   := $(RCSRC:.c=.o)
-ICOBJ   := $(ICSRC:.c=.o)
-COBJ    := $(RCOBJ) $(ICOBJ)
-SOBJ    := $(SSRC:.s=.o)
+ifneq ($(BUILD),$(notdir $(CURDIR)))
+#---------------------------------------------------------------------------------
 
-OBJ     := $(COBJ) $(SOBJ)
+export OUTPUT	:=	$(CURDIR)/$(TARGET)
 
-ifeq ($(strip $(bMB)), 1)
-TARGET  := $(PROJ).mb
-SPECS   := -specs=gba_mb.specs
+export VPATH	:=	$(foreach dir,$(SOURCES),$(CURDIR)/$(dir)) \
+			$(foreach dir,$(DATA),$(CURDIR)/$(dir)) \
+			$(foreach dir,$(GRAPHICS),$(CURDIR)/$(dir))
+
+export DEPSDIR	:=	$(CURDIR)/$(BUILD)
+
+CFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.c)))
+CPPFILES	:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.cpp)))
+SFILES		:=	$(foreach dir,$(SOURCES),$(notdir $(wildcard $(dir)/*.s)))
+PNGFILES	:=	$(foreach dir,$(GRAPHICS),$(notdir $(wildcard $(dir)/*.png)))
+BINFILES	:=	$(foreach dir,$(DATA),$(notdir $(wildcard $(dir)/*.*)))
+
+ifneq ($(strip $(MUSIC)),)
+	export AUDIOFILES	:=	$(foreach dir,$(notdir $(wildcard $(MUSIC)/*.*)),$(CURDIR)/$(MUSIC)/$(dir))
+	BINFILES += soundbank.bin
+endif
+
+#---------------------------------------------------------------------------------
+# use CXX for linking C++ projects, CC for standard C
+#---------------------------------------------------------------------------------
+ifeq ($(strip $(CPPFILES)),)
+#---------------------------------------------------------------------------------
+	export LD	:=	$(CC)
+#---------------------------------------------------------------------------------
 else
-TARGET  := $(PROJ)
-SPECS   := -specs=gba.specs
+#---------------------------------------------------------------------------------
+	export LD	:=	$(CXX)
+#---------------------------------------------------------------------------------
 endif
+#---------------------------------------------------------------------------------
 
-# --- Compiling -------------------------------------------------------
+export OFILES := $(addsuffix .o,$(BINFILES)) \
+				 $(PNGFILES:.png=.o) \
+				 $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
 
-CROSS   ?= arm-none-eabi-
-AS      := $(CROSS)gcc
-CC      := $(CROSS)gcc
-LD      := $(CROSS)gcc
-OBJCOPY := $(CROSS)objcopy
+export HFILES := $(addsuffix .h,$(subst .,_,$(BINFILES)))
 
-ARCH    := -mthumb-interwork -mthumb
-RARCH   := -mthumb-interwork -mthumb
-IARCH   := -mthumb-interwork -marm
+export INCLUDE	:=	$(foreach dir,$(INCLUDES),-iquote $(CURDIR)/$(dir)) \
+					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
+					-I$(CURDIR)/$(BUILD)
 
-CBASE   := $(INCLUDE) -O2 -Wall -fno-strict-aliasing
-RCFLAGS := $(CBASE) $(RARCH)
-ICFLAGS := $(CBASE) $(IARCH) -mlong-calls
-CFLAGS  := $(RCFLAGS)
+export LIBPATHS	:=	$(foreach dir,$(LIBDIRS),-L$(dir)/lib)
 
-ASFLAGS := -x assembler-with-cpp  -c -mthumb-interwork
-LDFLAGS := $(ARCH) $(SPECS) $(LIBPATHS) $(LIBS)
+.PHONY: $(BUILD) clean
 
-ifeq ($(strip $(bMAP)), 1)
-	LDFLAGS += -Wl,-Map,$(PROJ).map
+#---------------------------------------------------------------------------------
+$(BUILD):
+	@[ -d $@ ] || mkdir -p $@
+	@$(MAKE) --no-print-directory -C $(BUILD) -f $(CURDIR)/Makefile
+
+#---------------------------------------------------------------------------------
+clean:
+	@echo clean ...
+	@rm -fr $(BUILD) $(TARGET).elf $(TARGET).gba
+
+
+#---------------------------------------------------------------------------------
+else
+
+#---------------------------------------------------------------------------------
+# main targets
+#---------------------------------------------------------------------------------
+
+$(OUTPUT).gba	:	$(OUTPUT).elf
+
+$(OUTPUT).elf	:	$(OFILES)
+
+$(OFILES_SOURCES) : $(HFILES)
+
+#---------------------------------------------------------------------------------
+# The bin2o rule should be copied and modified
+# for each extension used in the data directories
+#---------------------------------------------------------------------------------
+
+#---------------------------------------------------------------------------------
+# rule to build soundbank from music files
+#---------------------------------------------------------------------------------
+soundbank.bin soundbank.h : $(AUDIOFILES)
+#---------------------------------------------------------------------------------
+	@mmutil $^ -osoundbank.bin -hsoundbank.h
+
+#---------------------------------------------------------------------------------
+# This rule links in binary data with the .bin extension
+#---------------------------------------------------------------------------------
+%.bin.o	%_bin.h :	%.bin
+#---------------------------------------------------------------------------------
+	@echo $(notdir $<)
+	@$(bin2o)
+
+#---------------------------------------------------------------------------------
+# This rule creates assembly source files using grit
+# grit takes an image file and a .grit describing how the file is to be processed
+# add additional rules like this for each image extension
+# you use in the graphics folders
+#---------------------------------------------------------------------------------
+%.s %.h: %.png %.grit
+#---------------------------------------------------------------------------------
+	@echo "grit $(notdir $<)"
+	@grit $< -fts -o$*
+
+-include $(DEPSDIR)/*.d
+#---------------------------------------------------------------------------------------
 endif
-
-# === TARGETS =========================================================
-
-.PHONY: build clean
-
-# --- Build -----------------------------------------------------------
-
-# --- Main target ---
-build: depends $(TARGET).gba
-	@echo done
-
-# --- Translation ---
-# ---.elf -> .gba ---
-$(TARGET).gba : $(TARGET).elf
-	@$(OBJCOPY) -v -O binary $< $@
-	-@gbafix $@ -t$(TITLE)
-
-# --- Linking -------------
-# --- *.o *.a -> .elf -----
-$(TARGET).elf : $(OBJ) 
-	$(LD) $^ $(LDFLAGS) -o $@
-
-# --- ROM compilation ---
-# --- *.c -> *.o --------
-$(RCOBJ) : %.o : %.c
-	$(CC) $(RCFLAGS) -c $< -o $@
-ifeq ($(strip $(bGENASM)), 1)
-	$(CC) $(RCFLAGS) -fverbose-asm -S $<
-endif
-
-# --- IWRAM compilation ----
-# *.iwram.c -> *.iwram.o ---
-$(ICOBJ) : %.iwram.o : %.iwram.c
-	$(CC) $(ICFLAGS) -c $< -o $@
-ifeq ($(strip $(bGENASM)), 1)
-	$(CC) $(ICFLAGS) -fverbose-asm -S $<
-endif
-
-# --- Assembling ---
-# --- *.s -> *.o ---
-$(SOBJ) : %.o : %.s
-	$(AS) $(ASFLAGS) -c $< -o $@
-
-# --- Header dependencies ---
-# --- *.c -> .d -------------
-depends:
-	$(CC) -MM $(CFLAGS) -c $(ICSRC) $(RCSRC) > $(PROJ).d
-
--include $(PROJ).d
-
-# --- Build Lib -------------------------------------------------------
-
-buildlib : 
-	$(MAKE) -C $(UDIR) -f tonclib.mak	buildlib
-
-# --- Clean -----------------------------------------------------------
-
-clean : 
-	@rm -fv $(TARGET).gba
-	@rm -fv $(TARGET).elf $(PROJ).map $(PROJ).d
-	@rm -fv $(CSRC:.c=.s)
-	@rm -fv $(OBJ)
-
-#EOF
+#---------------------------------------------------------------------------------------

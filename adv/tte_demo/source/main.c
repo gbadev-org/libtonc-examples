@@ -5,7 +5,10 @@
 
 #include "menu.h"
 #include "fonts.h"
-#include "all_gfx.h"
+
+#include "dlgbox.h"
+#include "dungeon01.h"
+#include "menu_gfx.h"
 
 // --------------------------------------------------------------------
 // PROTOTYPES

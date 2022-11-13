@@ -13,8 +13,13 @@
 #include <tonc.h>
 #include "mode7.h"
 
-#include "all_gfx.h"
-
+#include "bc1floor.h"
+#include "bc1sky.h"
+#include "bgpal.h"
+#include "border.h"
+#include "karts.h"
+#include "objpal.h"
+#include "thwomp.h"
 
 #define SPR_COUNT	24
 
