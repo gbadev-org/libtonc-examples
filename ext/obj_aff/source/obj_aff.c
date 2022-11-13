@@ -37,7 +37,7 @@ int aff_value= 0;
 void init_metr()
 {
 	// Places the tiles of a 4bpp metroid sprite into LOW obj VRAM
-	memcpy32(tile_mem[4], metr_boxTiles, metr_boxTilesLen/4);
+	memcpy32(tile_mem[4], metrTiles, metrTilesLen/4);
 	memcpy32(pal_obj_mem, metrPal, metrPalLen/4);
 
 	// setup main metroid

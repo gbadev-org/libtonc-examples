@@ -14,7 +14,7 @@ void init_main()
 	oam_init(oam_mem, 128);
 
 	// Get the tiles & palette
-	memcpy32(&tile_mem[4][0], metr_boxTiles, metr_boxTilesLen/4);
+	memcpy32(&tile_mem[4][0], metrTiles, metrTilesLen/4);
 	memcpy32(pal_obj_mem, metrPal, metrPalLen/4);
 
 	// Initialize the metroid sprite
