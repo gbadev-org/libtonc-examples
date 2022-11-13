@@ -1,0 +1,4 @@
+#
+# OAC GFX : 4bpp, not compressed. Use metatiles of 4x4 tiles.
+#
+-gB4 -Mh4 -Mw4
