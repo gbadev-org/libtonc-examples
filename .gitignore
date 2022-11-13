@@ -1,0 +1,4 @@
+build/
+*.sav
+*.gba
+*.elf
