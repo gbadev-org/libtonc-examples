@@ -1,0 +1,4 @@
+#
+# Nums : 64x64t, 8bpp, SBB-layout, not compressed.
+#
+-gt -gB8

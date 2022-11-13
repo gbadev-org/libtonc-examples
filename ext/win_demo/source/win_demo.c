@@ -39,7 +39,7 @@ void init_front_map()
 {
 	int ii, jj;
 
-	memcpy32(&tile8_mem[0][1], nums8Tiles, nums8TilesLen/4);
+	memcpy32(&tile8_mem[0][1], numsTiles, numsTilesLen/4);
 	memcpy32(pal_bg_mem, numsPal, numsPalLen/4);
 	pal_bg_mem[0]= CLR_BLACK;
 

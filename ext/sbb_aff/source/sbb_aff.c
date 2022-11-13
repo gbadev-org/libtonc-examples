@@ -59,7 +59,7 @@ void init_map()
 {
 	int ii;
 
-	memcpy32(&tile8_mem[0][1], nums8Tiles, nums8TilesLen/4);
+	memcpy32(&tile8_mem[0][1], numsTiles, numsTilesLen/4);
 	memcpy32(pal_bg_mem, numsPal, numsPalLen/4);
 
 	REG_BG2CNT= BG_CBB(0) | BG_SBB(8) | BG_AFF_64x64;
