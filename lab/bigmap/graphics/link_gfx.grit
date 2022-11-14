@@ -1,0 +1,4 @@
+#
+# Link GFX : 4bpp, not compressed. Metatiles of 2x2 tiles. Only 128x48 pixels.
+#
+-gB4 -Mw2 -Mh2 -aw128 -ah48

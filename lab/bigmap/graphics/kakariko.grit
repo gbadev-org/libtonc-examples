@@ -1,0 +1,4 @@
+#
+# Kakariko : 4bpp, flat-layout, LZ77 compressed (only the tiles).
+#
+-gt -gB4 -mR4 -mLf -Zl -gz -mz! -pz!
