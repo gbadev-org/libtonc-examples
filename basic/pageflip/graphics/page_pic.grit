@@ -1,0 +1,4 @@
+#
+# Page pic : bitmap, 8bpp, flat-layout, not compressed.
+#
+-gb -gB8 -m -mLf
