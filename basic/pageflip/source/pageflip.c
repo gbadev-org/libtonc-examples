@@ -19,11 +19,11 @@ void load_gfx()
 	int ii;
 	for(ii=0; ii<16; ii++)
 	{
-		memcpy(&vid_mem_front[ii*120], &frontBitmap[ii*144/4], 144);
-		memcpy(&vid_mem_back[ii*120], &backBitmap[ii*144/4], 144);
+		memcpy32(&vid_mem_front[ii*120], &frontBitmap[ii*144/4], 144/4);
+		memcpy32(&vid_mem_back[ii*120], &backBitmap[ii*144/4], 144/4);
 	}
 
-	memcpy(&pal_bg_mem[0], page_picPal, page_picPalLen);
+	memcpy16(&pal_bg_mem[0], page_picPal, page_picPalLen/2);
 }
 
 int main()
