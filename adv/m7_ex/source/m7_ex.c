@@ -310,7 +310,7 @@ void init_menu()
 		*pwd++ |= octup(8);
 
 	LZ77UnCompVram(borderTiles, &tile_mem[1][128]);
-	GRIT_CPY(pal_bg_bank[15], borderPal);
+	memcpy16(pal_bg_bank[15], borderPal, 16);
 
 	se_window(se_mem[7], 6, 4, 24, 11, MENU_FRAME_SE0);
 	tte_set_margins(MENU_X0+8, MENU_Y0, 184, 80);
