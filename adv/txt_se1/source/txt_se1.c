@@ -5,6 +5,8 @@
 //! \author cearn
 //
 // === NOTES ===
+//
+// Modified in 20221114 by AntonioND to fix palette issues.
 
 #include <tonc.h>
 
@@ -71,10 +73,11 @@ void init_main()
 	pal_bg_mem[0x1F]= CLR_RED;
 	pal_bg_mem[0x2F]= CLR_GREEN;
 	pal_bg_mem[0x3F]= CLR_BLUE;
+	pal_bg_mem[0x4F]= CLR_WHITE;
 
-	pal_bg_mem[0xE8]= pal_bg_mem[0x08];	// bg
+	pal_bg_mem[0xE8]= RGB15(0, 0, 24);	// bg
 	pal_bg_mem[0xEE]= CLR_ORANGE;		// shadow
-	pal_bg_mem[0xEF]= pal_bg_mem[0x0F];	// text
+	pal_bg_mem[0xEF]= CLR_WHITE;		// text
 }
 
 void txt_se_frame(int l, int t, int r, int b, u16 se0)
@@ -123,10 +126,10 @@ int main()
 
 	// framed text, v1
 	txt_se_frame(10, 2, 29, 9, 0);
-	se_puts( 88, 24, "frame 0:", 0);
+	se_puts( 88, 24, "frame 0:", 0x4000);
 	se_puts(104, 32, "/^\\[#]`_'", 0);
-	se_puts( 88, 40, "bank  0:\n  basic text,\n  transparent bg",
-		0);
+	se_puts( 88, 40, "bank  4:\n  basic text,\n  transparent bg",
+		0x4000);
 
 	// framed text, v2
 	txt_se_frame(10, 11, 29, 18, TID_FRAME1-TID_FRAME0);

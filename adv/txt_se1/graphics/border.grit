@@ -1,0 +1,4 @@
+#
+# Border : 4bpp, 16 colors, not compressed.
+#
+-gt -gB4 -pn16 -gT6BADBD
