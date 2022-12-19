@@ -57,7 +57,8 @@ LIBS	:= -lmm -ltonc
 
 #---------------------------------------------------------------------------------
 # list of directories containing libraries, this must be the top level containing
-# include and lib
+# include and lib.
+# the LIBGBA path should remain in this list if you want to use maxmod
 #---------------------------------------------------------------------------------
 LIBDIRS	:=	$(LIBGBA) $(LIBTONC)
 
@@ -103,11 +104,15 @@ else
 endif
 #---------------------------------------------------------------------------------
 
-export OFILES := $(addsuffix .o,$(BINFILES)) \
-				 $(PNGFILES:.png=.o) \
-				 $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
+export OFILES_BIN := $(addsuffix .o,$(BINFILES))
 
-export HFILES := $(addsuffix .h,$(subst .,_,$(BINFILES)))
+export OFILES_SOURCES := $(CPPFILES:.cpp=.o) $(CFILES:.c=.o) $(SFILES:.s=.o)
+
+export OFILES_GRAPHICS := $(PNGFILES:.png=.o)
+
+export OFILES := $(OFILES_BIN) $(OFILES_SOURCES) $(OFILES_GRAPHICS)
+
+export HFILES := $(addsuffix .h,$(subst .,_,$(BINFILES))) $(PNGFILES:.png=.h)
 
 export INCLUDE	:=	$(foreach dir,$(INCLUDES),-iquote $(CURDIR)/$(dir)) \
 					$(foreach dir,$(LIBDIRS),-I$(dir)/include) \
