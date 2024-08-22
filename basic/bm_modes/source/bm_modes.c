@@ -4,9 +4,14 @@
 //
 // (20031002 - 20060922, cearn)
 
+// This example is a hack. Normally you aren't supposed to have a bitmap that is
+// used in different modes. Modes 3 and 5 use 16 BPP images so they could, in
+// theory, share graphics. However, mode 4 uses 8 BPP images.
+
 #include <string.h>
 #include <tonc.h>
 #include "modes.h"
+#include "modes_pal.h"
 
 int main()
 {
@@ -16,7 +21,7 @@ int main()
 	// Copy the data and palette to the right
 	// addresses
 	memcpy(vid_mem, modesBitmap, modesBitmapLen);
-	memcpy(pal_bg_mem, modesPal, modesPalLen);
+	memcpy(pal_bg_mem, modes_palPal, modes_palPalLen);
 
 	while(1)
 	{

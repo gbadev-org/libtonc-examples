@@ -1,0 +1,2 @@
+# Treat the bitmap as a 8 BPP image and only export the palette
+-gB8 -g! -p
