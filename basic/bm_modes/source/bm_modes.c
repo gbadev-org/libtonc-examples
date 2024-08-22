@@ -20,8 +20,8 @@ int main()
 
 	// Copy the data and palette to the right
 	// addresses
-	memcpy(vid_mem, modesBitmap, modesBitmapLen);
-	memcpy(pal_bg_mem, modes_palPal, modes_palPalLen);
+	memcpy32(vid_mem, modesBitmap, modesBitmapLen / sizeof(u32));
+	memcpy16(pal_bg_mem, modes_palPal, modes_palPalLen / sizeof(u16));
 
 	while(1)
 	{

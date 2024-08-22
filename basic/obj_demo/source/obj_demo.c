@@ -72,8 +72,8 @@ int main()
 {
 	// Places the glyphs of a 4bpp boxed metroid sprite
 	//   into LOW obj memory (cbb == 4)
-	memcpy(&tile_mem[4][0], metrTiles, metrTilesLen);
-	memcpy(pal_obj_mem, metrPal, metrPalLen);
+	memcpy32(&tile_mem[4][0], metrTiles, metrTilesLen / sizeof(u32));
+	memcpy16(pal_obj_mem, metrPal, metrPalLen / sizeof(u16));
 
 	oam_init(obj_buffer, 128);
 	REG_DISPCNT= DCNT_OBJ | DCNT_OBJ_1D;

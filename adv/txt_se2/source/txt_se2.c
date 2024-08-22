@@ -57,9 +57,13 @@ void test_1(u32 *dst, const u32 *src, u32 len)
 	gtimes[1]= profile_stop();
 }
 
-// copy via memcpy
+// copy via memcpy.
 void test_2(void *dst, const void *src, u32 len)
 {
+	// Note that this is unsafe. memcpy() is allowed to copy the data in 8-bit
+	// units, which VRAM doesn't allow. Using memcpy() to copy data to VRAM may
+	// work as long as everything is aligned, but it shouldn't be used in
+	// general. Use memcpy16(), memcpy32(), or DMA copy functions instead.
 	profile_start();
 	memcpy(dst, src, len);
 	gtimes[2]= profile_stop();
