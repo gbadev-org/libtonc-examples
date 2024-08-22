@@ -1,0 +1,2 @@
+# Affine tile map, 8 bpp, LZ77 compressed.
+-gt -gB8 -gzl -mRa -mLa -mzl -m -p
