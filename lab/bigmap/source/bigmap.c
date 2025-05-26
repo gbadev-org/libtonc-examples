@@ -73,8 +73,8 @@ TSprite g_link;
 
 // === PROTOTYPES =====================================================
 
-INLINE void vp_center(VIEWPORT *vp, FIXED x, FIXED y);
-void vp_set_pos(VIEWPORT *vp, FIXED x, FIXED y);
+INLINE void vp_center(VIEWPORT *vp, int x, int y);
+void vp_set_pos(VIEWPORT *vp, int x, int y);
 
 // === MACROS =========================================================
 // === INLINES=========================================================
@@ -218,7 +218,7 @@ void init_main()
 	GRIT_CPY(pal_obj_mem, link_gfxPal);
 	GRIT_CPY(tile_mem[4], link_gfxTiles);
 
-	link_init(&g_link, 120<<8, 80<<8, 0);
+	link_init(&g_link, int2fx(120), int2fx(80), 0);
 
 	//# NOTE: erasing and rendering text flows over into the VDRAW period.
 	//# Using the ASM renderer and placing the text at the bottom limits its effects.
@@ -249,7 +249,7 @@ int main()
 		link_animate(&g_link);
 		link_move(&g_link);
 
-		x= g_link.x>>8, y= g_link.y>>8;
+		x= fx2int(g_link.x), y= fx2int(g_link.y);
 
 		vp_center(&g_vp, x, y);
 		oam_copy(oam_mem, obj_buffer, 128);

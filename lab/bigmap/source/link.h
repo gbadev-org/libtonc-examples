@@ -41,7 +41,7 @@ typedef struct TSprite
 // PROTOTYPES
 // --------------------------------------------------------------------
 
-void link_init(TSprite *link, int x, int y, int obj_id);
+void link_init(TSprite *link, FIXED x, FIXED y, int obj_id);
 void link_set_state(TSprite *link, u32 state);
 void link_input(TSprite *link);
 

@@ -83,7 +83,7 @@ const OBJ_ATTR cLinkObjs[3]=
 // FUNCTIONS
 // --------------------------------------------------------------------
 
-void link_init(TSprite *link, int x, int y, int obj_id)
+void link_init(TSprite *link, FIXED x, FIXED y, int obj_id)
 {
 	link->x= x;
 	link->y= y;
@@ -159,7 +159,7 @@ void link_animate(TSprite *link)
 
 static void link_ani_stand(TSprite *link)
 {
-	POINT pt= { (link->x>>8)-g_vp.x, (link->y>>8) - g_vp.y };
+	POINT pt= { fx2int(link->x) - g_vp.x, fx2int(link->y) - g_vp.y };
 	OBJ_ATTR *obj= &obj_buffer[link->objId];
 
 	int dir= link->dir;
@@ -197,10 +197,10 @@ static void link_ani_walk(TSprite *link)
 {
 	int dir= link->dir;
 	int sublut= cLookDirs[dir];
-	int frame= (link->aniFrame>>8) & 7;
+	int frame= fx2int(link->aniFrame) & 7;
 	int tid;
 
-	POINT pt= { (link->x>>8)-g_vp.x, (link->y>>8) - g_vp.y };
+	POINT pt= { fx2int(link->x) - g_vp.x, fx2int(link->y) - g_vp.y };
 	OBJ_ATTR *obj= &obj_buffer[link->objId];
 
 
