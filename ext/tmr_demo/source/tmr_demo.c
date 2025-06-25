@@ -41,7 +41,7 @@ void tmr_test()
 
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 		key_poll();
 
 		if(REG_TM3D != sec)
@@ -61,6 +61,10 @@ void tmr_test()
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	// set-up berk font
 	tte_init_se(0, BG_CBB(0)|BG_SBB(31), 1, 0, 0, &berkFont, se_drawg);
 	tte_init_con();

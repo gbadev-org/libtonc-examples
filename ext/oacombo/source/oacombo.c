@@ -143,13 +143,17 @@ void init_main()
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	init_main();
 
 	int ii, alpha=0;
 
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 		key_poll();
 		alpha -= 128*key_tri_shoulder();
 
@@ -187,7 +191,7 @@ int alt_main()
 
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 		key_poll();
 		alpha -= 128*key_tri_shoulder();
 

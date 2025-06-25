@@ -59,6 +59,10 @@ void init_map()
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	init_map();
 	REG_DISPCNT= DCNT_MODE0 | DCNT_BG0 | DCNT_OBJ;
 
@@ -67,7 +71,7 @@ int main()
 	bg0_map[se_prev]++;	// initial position of cross
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 
 		key_poll();
 		bg0_pt.x += key_tri_horz();

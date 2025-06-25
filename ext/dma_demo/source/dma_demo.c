@@ -107,11 +107,15 @@ int main()
 {
 	int rr=64, x0=120, y0=80;
 
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	init_main();
 
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 		key_poll();
 
 		rr += key_tri_shoulder();	// size with B/A

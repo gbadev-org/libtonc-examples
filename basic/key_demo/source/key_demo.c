@@ -17,6 +17,10 @@
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	int ii;
 	u32 btn;
 	COLOR clr;
@@ -29,7 +33,7 @@ int main()
 
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 		// slowing down polling to make the changes visible
 		if((frame & 7) == 0)
 			key_poll();

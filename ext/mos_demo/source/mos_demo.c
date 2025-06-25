@@ -23,7 +23,7 @@ void test_mosaic()
 
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 
 		// control the mosaic
 		key_poll();
@@ -72,6 +72,10 @@ void load_metr()
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	// setup sprite
 	oam_init(oam_mem, 128);
 

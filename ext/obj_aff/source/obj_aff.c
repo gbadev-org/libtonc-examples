@@ -172,7 +172,7 @@ void objaff_test()
 			}
 		}
 
-		vid_vsync();
+		VBlankIntrWait();
 
 		// we only have one OBJ_ATTR, so update that
 		obj_copy(obj_mem, obj_buffer, 2);
@@ -191,6 +191,10 @@ void objaff_test()
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	REG_DISPCNT= DCNT_BG0 | DCNT_OBJ | DCNT_OBJ_1D;
 	oam_init(obj_buffer, 128);
 	init_metr();

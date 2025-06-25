@@ -83,7 +83,6 @@ int main()
 
 	while(1)
 	{
-		//vid_vsync();
 		VBlankIntrWait();
 		key_poll();
 

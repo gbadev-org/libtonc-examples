@@ -11,6 +11,10 @@
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	// Load palette
 	memcpy16(pal_bg_mem, brinPal, brinPalLen / sizeof(u16));
 	// Load tiles into CBB 0
@@ -27,7 +31,7 @@ int main()
 	int x= 192, y= 64;
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 		key_poll();
 
 		x += key_tri_horz();

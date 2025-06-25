@@ -101,7 +101,7 @@ void test_win()
 	while(1)
 	{
 		key_poll();
-		vid_vsync();
+		VBlankIntrWait();
 
 		// key_hit() or key_is_down() 'switch'
 		// A depressed: move on direction press (std movement)
@@ -130,6 +130,10 @@ void test_win()
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	// obvious inits
 	oam_init(oam_mem, 128);
 	init_front_map();

@@ -90,7 +90,7 @@ void sbb_aff()
 
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 		key_poll();
 
 		// dir + A : move map in screen coords
@@ -145,6 +145,10 @@ void sbb_aff()
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	init_map();
 	init_cross();
 

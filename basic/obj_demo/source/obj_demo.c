@@ -35,7 +35,7 @@ void obj_test()
 
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 		key_poll();
 
 		// move left/right
@@ -70,6 +70,10 @@ void obj_test()
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	// Places the glyphs of a 4bpp boxed metroid sprite
 	//   into LOW obj memory (cbb == 4)
 	memcpy32(&tile_mem[4][0], metrTiles, metrTilesLen / sizeof(u32));
@@ -80,7 +84,8 @@ int main()
 
 	obj_test();
 
-	while(1);
+	while(1)
+		VBlankIntrWait();
 
 	return 0;
 }

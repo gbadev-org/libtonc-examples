@@ -31,7 +31,7 @@ void test_blend()
 
 	while(1)
 	{
-		vid_vsync();
+		VBlankIntrWait();
 		key_poll();
 
 		// interactive blend weights
@@ -105,6 +105,10 @@ void load_fence()
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	oam_init(oam_mem, 128);
 	load_metr();
 	load_fence();

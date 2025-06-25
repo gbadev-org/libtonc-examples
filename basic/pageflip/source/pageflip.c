@@ -28,6 +28,10 @@ void load_gfx()
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	load_gfx();
 	REG_DISPCNT= DCNT_MODE4 | DCNT_BG2;
 
@@ -35,9 +39,10 @@ int main()
 
 	while(1)
 	{
-		while(KEY_DOWN_NOW(KEY_START)) ;	// pause with start
+		while(KEY_DOWN_NOW(KEY_START))	// pause with start
+			VBlankIntrWait();
 
-		vid_vsync();
+		VBlankIntrWait();
 		if(++ii == 60)
 		{
 			ii=0;

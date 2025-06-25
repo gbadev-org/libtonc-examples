@@ -15,6 +15,10 @@
 
 int main()
 {
+	// Init interrupts and VBlank irq.
+	irq_init(NULL);
+	irq_add(II_VBLANK, NULL);
+
 	int mode= 3;
 	REG_DISPCNT= mode | DCNT_BG2;
 
@@ -26,7 +30,7 @@ int main()
 	while(1)
 	{
 		// Wait till VBlank before doing anything
-		vid_vsync();
+		VBlankIntrWait();
 
 		// Check keys for mode change
 		key_poll();
